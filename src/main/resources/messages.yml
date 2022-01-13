@@ -1,0 +1,93 @@
+KICK_MESSAGE: "&6You have lost connection to the server"
+JOIN_MOTD: "&4Welcome to hell, cunt"
+JOIN_MESSAGE: "&7%player% joined"
+JOIN_CLICK: "/w %player% "
+JOIN_HOVER: "&6Message &3%player%"
+QUIT_MESSAGE: "&7%player% left"
+BAD_COMMAND: "&4Bad command. Type /help for all commands."
+USAGE_COMMAND: "&4Usage: %syntax%"
+PLAYER_NOT_ONLINE: "&6The player %player% is not online."
+PLAYER_NOT_FOUND: "&6The player %player% has not joined or doesn't exist."
+SET_GAMEMODE: "&6Set current game mode to %gamemode%"
+TOG_CON_MSGS: "&6Connection messages %toggle%"
+RESTARTING_TIME: "&6[SERVER] Server restarting in %time%"
+RESTARTING_NOW: "&6[SERVER] Server restarting"
+HELP_MESSAGE:
+  - "&6-----------------------------------------------------"
+  - "&3/w <player> - Send pm to player"
+  - "&3/r - Reply to last pm"
+  - "&3/kill - Start all over again"
+  - "&3/ignore <player> - Ignore someones messages"
+  - "&3/discord - Join community discord server"
+  - "&3/joindate - Check your own playtime/join date"
+  - "&3/ignorelist - See your ignore list"
+  - "&3/togglechat - Toggle chat messages entirely"
+  - "&3/toggledeathmsg - Toggle death messages"
+  - "&3/togglewhispering - Toggle whether you receive pms"
+  - "&3/toggleconnectionmsgs - Toggle connection messages."
+  - "&6-----------------------------------------------------"
+WORLDSTATS:
+  - '&6-----------------------------------------------------'
+  - '&3%players% player(s) have spawned at least once in the server. '
+  - '&3The Map is %years% years, %months% months and %days% days old and has a file size of %size% GB'
+  - '&6-----------------------------------------------------'
+QUEUE_MESSAGE:
+  - "&6-----------------------------------------------------"
+  - "&3%regular_online% regular queue players online."
+  - "&3%priority_online% priority queue players online."
+  - "&3%veteran_online% veteran queue players online."
+  - "&3"
+  - "&3%regular% regular players in queue."
+  - "&3%priority% priority players in queue."
+  - "&3%veteran% veteran players in queue."
+  - "&6-----------------------------------------------------"
+PLAYTIME_OFFLINE:
+  - "&6-----------------------------------------------------"
+  - "&3%player% first joined %firstplayed%"
+  - "&3%player% last joined %lastplayed%"
+  - "&6-----------------------------------------------------"
+PLAYTIME_ONLINE:
+  - "&6-----------------------------------------------------"
+  - "&3%player% first joined %firstplayed%"
+  - "&3%player% playtime is %playtime%"
+  - "&6-----------------------------------------------------"
+VETERAN_TRUE:
+  - "&6-----------------------------------------------------"
+  - "&3%player% has veteran status"
+  - "&6-----------------------------------------------------"
+VETERAN_FALSE:
+  - "&6-----------------------------------------------------"
+  - "&3%player% does not have veteran status"
+  - "&6-----------------------------------------------------"
+CONFIG_HELP:
+  - "&6-----------------------------------------------------"
+  - "&3/config reload <all|messages|config|motds>"
+  - "&3/config help"
+  - "&6-----------------------------------------------------"
+CONFIG_RELOADED:
+  - "&aConfig \"%config%\" reloaded successfully!"
+HEADER:
+  - ""
+  - "&7&l&o2BOGANS"
+  - "&7&l&o2TRADIES"
+  - ""
+FOOTER:
+  - ""
+  - "           &a%tps% &3tps - %players% players - %ping% &3ping - %server_uptime% uptime            "
+  - ""
+  - "           &7donate: www.2b2t.com.au           "
+  - "           &7contact: 2b2tau@gmail.com           "
+  - ""
+TAB1DOMAIN: "aussieanarchy.org"
+HEADER1:
+  - ""
+  - "&7&l&oAUSSIE"
+  - "&7&l&oANARCHY"
+  - ""
+FOOTER1:
+  - ""
+  - "           &a%tps% &3tps - %players% players - %ping% &3ping - %server_uptime% uptime            "
+  - ""
+  - "           &7donate.aussieanarchy.org           "
+  - "           &7contact@aussieanarchy.org         "
+  - ""

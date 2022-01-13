@@ -1,0 +1,157 @@
+ADMINS:
+  - "d2efc93e-2168-30d8-8fda-af2426c1472e"
+
+TABENABLED: true
+CRYSTALDELAY: 2 # -1 to Disable
+NOGLOBALTHUNDER: true
+WITHERSOUND: true
+VETCHECK: true
+VETTIME: 1620345600000L # UNIX EPOCH MS
+FORCEVET:
+  - "uuid"
+
+ANTINETHERROOF: true
+
+SPEEDLIMIT: true
+SPEEDLIMITMAXBPS: 80 # Metres Per Second
+
+WORLDSTATSTIME: -1
+WORLDSTATSINTB: false # Show in Terabytes opposed to Gigabytes
+WORLDSTATSTICKS: 72000
+WORLDSTATSFILE:
+  - "./world/region"
+  - "./world_nether/DIM-1/region"
+  - "./world_the_end/DIM1/region"
+
+ANTIBEDROCKHOLES: true
+ANTIDUPE: true
+
+ANTICHUNKBAN: true
+ANTICHUNKBANMAX: 256
+ANTICHUNKBANTIME: 30 # Seconds
+ANTICHUNKBANBLOCKS:
+  - "STANDING_BANNER"
+  - "WALL_BANNER"
+  - "FURNACE"
+  - "ENCHANTMENT_TABLE"
+  - "WALL_SIGN"
+  - "HOPPER"
+  - "DROPPER"
+  - "DISPENSER"
+  - "BREWING_STAND"
+  - "BEACON"
+  - "SIGN_POST"
+  - "FLOWER_POT"
+  - "SKULL"
+#  - "ENDER_CHEST"
+#  - "TRAPPED_CHEST"
+#  - "CHEST"
+
+ANTIELYTRAFLY: false
+MAXELYTRAFLYVL: 25
+
+ANTIBOATFLY: false
+MAXBOATFLYVL: 15
+
+ANTIGODMODE: true
+MAXDAMAGE: 40
+
+ANTIINSTANTMINE: true
+INSTANTMINEBLACKLIST:
+  - "OBSIDIAN"
+
+ANTILAG: true
+MAXFIREWORKS: 10
+MAXMINECARTS: 20
+
+ANTILIQUIDLAG: true
+ANTILIQUIDLAGRADIUS: 100
+ANTILIQUIDLAGTPS: 15
+
+ANTIEXPLOITS: true
+MAXFALLINGBLOCKS: 50
+FALLINGBLOCKSRANGE: 50
+
+ANTINOCOM: true
+MAXNOCOMDIST: 64
+
+ANTIPACKETFLY: true
+MAXPACKETFLYVL: 25
+
+ANTIPROJECTILEVELOCITY: true
+
+ANTIREDSTONE: true
+ANTIREDSTONETPS: 16
+PISTONCHUNKMAX: 16 # Max piston movements in a chunk (> this limit will freeze chunk)
+FREEZECHUNK: true
+CHUNKCURRENTMAX: 100
+CHUNKFREEZEMATERIALS:
+  - "NOTE_BLOCK:64"
+  - "OBSERVER:64"
+  - "PISTON_STICKY_BASE:64"
+  - "PISTON_BASE:64"
+  - "SLIME_BLOCK:64"
+  - "REDSTONE:64"
+  - "REDSTONE_COMPARATOR:64"
+  - "DIODE:64"
+
+ANTIWITHERLAG: true # TPS && PLAYERS == NO AI
+ANTIWITHERTPS: 16 # TPS
+ANTIWITHERPLAYERS: 50 # Players Online
+ANTIWITHERSKULLTICKS: 300 # Ticks
+ANTIWITHERRANGE: 250 # Blocks around 0 128 0 (-1 Disable)
+ANTIWITHERWORLDS:
+  - "world_nether"
+
+RANDOMSPAWNENABLED: true
+RANDOMSPAWNRADIUS: 600
+RANDOMSPAWNWORLD: "world"
+RANDOMSPAWNBLOCKS:
+  - "SNOW"
+  - "SNOW_LAYER"
+  - "GRASS_BLOCK"
+  - "DIRT"
+  - "LOG"
+  - "GRASS"
+  - "LEAVES"
+
+RESTARTTIMES:
+  - "18:20:00"
+
+RESTARTCOUNTDOWN:
+  - '1800'
+  - '600'
+  - '60'
+  - '30'
+  - '15'
+  - '10'
+  - '9'
+  - '8'
+  - '7'
+  - '6'
+  - '5'
+  - '4'
+  - '3'
+  - '2'
+  - '1'
+
+COMMANDSWHITELISTED:
+  - "/w"
+  - "/r"
+  - "/jd"
+  - "/pt"
+  - "/kill"
+  - "/help"
+  - "/ignore"
+  - "/discord"
+  - "/donate"
+  - "/website"
+  - "/suicide"
+  - "/history"
+  - "/joindate"
+  - "/playtime"
+  - "/ignorelist"
+  - "/togglechat"
+  - "/toggledeathmsg"
+  - "/togglewhispering"
+  - "/toggleconnectionmsgs"

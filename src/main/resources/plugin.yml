@@ -1,0 +1,66 @@
+name: Anarchy
+version: 1.0
+main: org.aussie.anarchy.Anarchy
+api-version: 1.17
+website: https://aussieanarchy.org
+depend:
+  - PistonChat
+  - ProtocolLib
+  - PlaceholderAPI
+  - LuckPerms
+  - spark
+commands:
+  config:
+    description: Config command
+  creative:
+    description: Switch to creative quickly
+    aliases: [ "gmc" ]
+  spectator:
+    description: Switch to specator quickly
+    aliases: [ "gmsp" ]
+  survival:
+    description: Switch to survival quickly
+    aliases: [ "gms" ]
+  serversay:
+    description: Broadcast messages
+    aliases: [ "say" ]
+  enderchest:
+    description: Open Ender Chest
+    aliases: [ "ec" ]
+  invsee:
+    description: Open Inventory
+    aliases: [ "is" ]
+  kickall:
+    description: Kick all online players
+    aliases: [ "kick-all" ]
+  sudoall:
+    description: Sudo all online players
+    aliases: [ "sudo-all" ]
+  queue:
+    description: Queue numbers
+    aliases: [ "queue" ]
+  autorestart:
+    description: Restart server
+    aliases: [ "ar", "restartserver" ]
+  motdadd:
+    description: Add MOTD
+  # Player Commands:
+  discord:
+    description: Official Discord
+  help:
+    description: 'Help: Dont ask for any'
+  playtime:
+    description: Check your own playtime/join date
+    aliases: [ "jd", "pt", "joindate", "history" ]
+  veteran:
+    description: Check veteran status
+    aliases: ["vet"]
+  worldstats:
+    description: World statistics
+    aliases: [ "stats" ]
+  suicide:
+    description: Restart your progress
+    aliases: [ "kill" ]
+  toggleconnectionmsgs:
+    description: Toggle connection messages
+    aliases: ["tcmsgs"]

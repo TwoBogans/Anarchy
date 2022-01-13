@@ -1,0 +1,23 @@
+ENABLED: true
+PREFIX: "&7&o&l2B&6 "
+SUFFIX: "&7&o&lAU&6 "
+WRAP: 45
+MOTDS:
+  - "bottom text example"
+  - "top text"
+  - "!!! CRINGE WARNING !!!"
+  - "'Autism' has more than 300 definitions here"
+  - "(chuckles) I'm in danger."
+  - "-1048533 70 1304000"
+  - "-38229 30 49492 here's my dupe stash."
+  - "-9952 71 -249866 Nether"
+  - "/ignore is your only friend here."
+  - "1 BEST DATING SERVER"
+  - "1 was the original number"
+  - "1.16 Expected sometime soon"
+  - "1.16 when"
+  - "Welcome, %name%"
+NAMES:
+  - "Fit"
+  - "Chad"
+  - "Boris"

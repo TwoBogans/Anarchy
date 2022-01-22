@@ -1,10 +1,10 @@
 package org.aussie.anarchy.module.features;
 
-import net.pistonmaster.pistonchat.api.PistonChatEvent;
 import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.Util;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -30,7 +30,7 @@ public class AntiSpam extends Module {
 
     @EventHandler
     private void on(PlayerMoveEvent e) {
-        if (!this.bypass(e.getPlayer())) {
+        if (this.bypass(e.getPlayer())) {
             if (e.getFrom().getZ() != e.getTo().getZ() && e.getFrom().getX() != e.getTo().getX()) {
                 this.moved.put(e.getPlayer(), true);
             }
@@ -40,23 +40,23 @@ public class AntiSpam extends Module {
 
     @EventHandler
     private void on(PlayerLoginEvent e) {
-        if (!this.bypass(e.getPlayer())) {
+        if (this.bypass(e.getPlayer())) {
             this.moved.putIfAbsent(e.getPlayer(), false);
         }
     }
 
     @EventHandler
     private void on(PlayerQuitEvent e) {
-        if (!this.bypass(e.getPlayer())) {
+        if (this.bypass(e.getPlayer())) {
             this.moved.put(e.getPlayer(), false);
         }
     }
 
     @EventHandler
-    private void on(PistonChatEvent e) {
+    private void on(AsyncPlayerChatEvent e) {
         Player player = e.getPlayer();
         String message = e.getMessage();
-        if (!this.bypass(player)) {
+        if (this.bypass(player)) {
             if (this.cooldown.contains(player)) {
                 e.setCancelled(true);
                 get().getScheduler().scheduleSyncRepeatingTask(get(), () -> {
@@ -81,10 +81,6 @@ public class AntiSpam extends Module {
     }
 
     private boolean bypass(Player player) {
-        if (Util.containsDomain(player, "debug.2b2t.com.au")) {
-            return false;
-        } else {
-            return player.hasPermission("anarchy.antispam.bypass") || Util.isAdmin(player);
-        }
+        return player.hasPermission("anarchy.antispam.bypass") || Util.isAdmin(player);
     }
 }

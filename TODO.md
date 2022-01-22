@@ -1,22 +1,19 @@
 # 2b2t Australia TODO
 
-## ASAP
-
+- Silent CA Patch
 - Setup Server to be completely hands-off with Crypto
 - Fix maps not updating
-- Buy Storage VPS for Backups to go
-
-## Before Anniversary
-
+- Fix ender pearls not working properly
+- Buy Storage VPS for Backups to go https://buyvm.net/block-storage-slabs/
+- Fix ServerAPI
 - Anti Illegals
 - Anti Console Spam
-
-## After Anniversary
-
+- Add Portal Cactus dupe
 - Mute commands
 - Back command
-- Add Troll Dupes (Lava & Cactus)
+- Add Troll Dupes (Lava & Cactus)?
 - Add Clock Detection to Anti Redstone
 - Donation Website (For MOTDs) (Crypto)
+- Java 17
 
 

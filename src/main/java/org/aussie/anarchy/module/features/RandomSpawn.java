@@ -63,8 +63,11 @@ public class RandomSpawn extends Module {
 
             int x = this.randomRange(-Config.RANDOMSPAWNRADIUS, Config.RANDOMSPAWNRADIUS);
             int z = this.randomRange(-Config.RANDOMSPAWNRADIUS, Config.RANDOMSPAWNRADIUS);
+
             int y = w.getHighestBlockYAt(x, z);
+
             loc = new Location(w, x, y, z);
+
             if (!this.disallowedMaterials.contains(loc.add(0.0D, -1.0D, 0.0D).getBlock().getType())) {
                 return loc;
             }
@@ -74,6 +77,6 @@ public class RandomSpawn extends Module {
     }
 
     private int randomRange(int min, int max) {
-        return min + (int)(Math.random() * (double)(max - min + 1));
+        return min + (int)(Math.random() * (double) (max - min + 1));
     }
 }

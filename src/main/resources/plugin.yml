@@ -61,6 +61,8 @@ commands:
   suicide:
     description: Restart your progress
     aliases: [ "kill" ]
+  jihad:
+    description: Boom
   toggleconnectionmsgs:
     description: Toggle connection messages
     aliases: ["tcmsgs"]

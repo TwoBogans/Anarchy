@@ -14,17 +14,16 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ModuleManager {
-    private final List<Module> modules = new ArrayList();
+    private final List<Module> modules = new ArrayList<>();
 
     public ModuleManager(Anarchy plugin) {
-        this.addModules(new AntiSpam(), new Miscellaneous(), new NoGlobalThunder(), new RandomMOTD(), new SpeedLimit(), new TabManager(), new VeteranCheck(), new WitherSound(), new WorldStats(), new AntiBedrockHoles(), new AntiBoatFly(), new AntiChunkBan(), new AntiDupe(), new AntiElytra(), new AntiExploits(), new AntiGodMode(), new AntiInstantMine(), new AntiLag(), new AntiLiquidLag(), new AntiNoCom(), new AntiPacketFly(), new AntiProjectileVelocity(), new AntiRedstone(), new AntiWitherLag(), new Anniversary(), new Halloween());
+        this.addModules(new AntiSpam(), new MaxYLevels(), new Miscellaneous(), new NoGlobalThunder(), new RandomMOTD(), new SpeedLimit(), new TabManager(), new VeteranCheck(), new WitherSound(), new WorldStats(), new AntiBedrockHoles(), new AntiBoatFly(), new AntiBoatFly(), new AntiChunkBan(), new AntiDupe(), new AntiElytra(), new AntiExploits(), new AntiGodMode(), new AntiInstantMine(), new AntiLag(), new AntiLiquidLag(), new AntiNoCom(), new AntiPacketFly(), new AntiProjectileVelocity(), new AntiRedstone(), new AntiWitherLag(), new Anniversary(), new Halloween());
         AtomicInteger i = new AtomicInteger();
         this.modules.forEach((p) -> {
             if (p.isEnabled()) {
                 plugin.registerListener(p.onEnable());
                 i.getAndIncrement();
             }
-
         });
         plugin.log(ChatColor.DARK_GREEN + "[Features] Enabled " + i.get() + " patches/features");
     }
@@ -34,7 +33,7 @@ public class ModuleManager {
     }
 
     public Module getModuleByClass(Class<?> clazz) {
-        Iterator var2 = this.modules.iterator();
+        Iterator<Module> var2 = this.modules.iterator();
 
         Module module;
         do {
@@ -42,7 +41,7 @@ public class ModuleManager {
                 return null;
             }
 
-            module = (Module)var2.next();
+            module = var2.next();
         } while(module.getClass() != clazz);
 
         return module;

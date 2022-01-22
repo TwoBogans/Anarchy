@@ -9,11 +9,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 public class AntiNetherRoof extends Module {
     @Override
     public boolean isEnabled() {
-        return Config.ANTINETHERROOF;
+        DateTime now = DateTime.now(DateTimeZone.forID("Australia/Sydney"));
+        System.out.println(now.getYear());
+        return Config.ANTINETHERROOF || now.getYear() == 2023;
     }
 
     @Override
@@ -49,7 +53,6 @@ public class AntiNetherRoof extends Module {
 
                 e.setTo(newLoc);
             }
-
         }
     }
 

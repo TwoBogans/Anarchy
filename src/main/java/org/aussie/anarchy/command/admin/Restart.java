@@ -52,23 +52,23 @@ public class Restart extends Command {
     }
 
     private void scheduleRestart(int seconds) {
-        AtomicInteger secs = new AtomicInteger(seconds);
-        if (this.task != 0) {
-            this.get().getScheduler().cancelTask(this.task);
-        }
-
-        this.task = this.get().getScheduler().runTaskTimer(this.get(), () -> {
-            if (Config.RESTARTCOUNTDOWN.contains(String.valueOf(secs.get()))) {
-                this.broadcast(Messages.RESTARTING_TIME.replace("%time%", this.getTime(secs.get())));
-            }
-
-            secs.getAndDecrement();
-            if (secs.get() <= 0) {
-                this.broadcast(Messages.RESTARTING_NOW);
-                Bukkit.shutdown();
-            }
-
-        }, 0L, 20L).getTaskId();
+//        AtomicInteger secs = new AtomicInteger(seconds);
+//        if (this.task != 0) {
+//            this.get().getScheduler().cancelTask(this.task);
+//        }
+//
+//        this.task = this.get().getScheduler().runTaskTimer(this.get(), () -> {
+//            if (Config.RESTARTCOUNTDOWN.contains(String.valueOf(secs.get()))) {
+//                this.broadcast(Messages.RESTARTING_TIME.replace("%time%", this.getTime(secs.get())));
+//            }
+//
+//            secs.getAndDecrement();
+//            if (secs.get() <= 0) {
+//                this.broadcast(Messages.RESTARTING_NOW);
+//                Bukkit.shutdown();
+//            }
+//
+//        }, 0L, 20L).getTaskId();
     }
 
     private String getTime(int seconds) {

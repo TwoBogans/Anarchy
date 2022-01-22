@@ -11,6 +11,7 @@ import org.aussie.anarchy.util.config.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Boat;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -35,9 +36,11 @@ public class AntiBoatFly extends Module {
                 if (event.getPlayer().getWorld().getBlockAt(l.getBlockX(), l.getBlockY() - 1, l.getBlockZ()).getType() != Material.WATER) {
                     if (e.isInsideVehicle() && e.getVehicle() != null) {
                         Entity vehicle = e.getVehicle();
+//                        if (!(vehicle instanceof Boat)) return;
                         if (AntiBoatFly.this.vl.get(e.getUniqueId()) != null) {
                             if (AntiBoatFly.this.vl.get(e.getUniqueId()) > Config.MAXBOATFLYVL) {
-                                vehicle.remove();
+                                vehicle.eject();
+//                                vehicle.remove();
                             } else {
                                 AntiBoatFly.this.vl.merge(e.getUniqueId(), 1, Integer::sum);
                                 Bukkit.getServer().getScheduler().runTaskLater(this.plugin, () -> AntiBoatFly.this.vl.put(e.getUniqueId(), AntiBoatFly.this.vl.get(e.getUniqueId()) - 1), 200L);
@@ -47,7 +50,6 @@ public class AntiBoatFly extends Module {
                             Bukkit.getServer().getScheduler().runTaskLater(this.plugin, () -> AntiBoatFly.this.vl.put(e.getUniqueId(), AntiBoatFly.this.vl.get(e.getUniqueId()) - 1), 200L);
                         }
                     }
-
                 }
             }
         });

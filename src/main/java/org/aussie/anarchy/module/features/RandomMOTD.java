@@ -10,6 +10,7 @@ import org.aussie.anarchy.hook.hooks.ProtocolLibHook;
 import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.config.Motds;
 import org.aussie.anarchy.util.packet.wrappers.WrapperHandshakingClientSetProtocol;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -61,7 +62,7 @@ public class RandomMOTD extends Module {
             String name = domainMap.get(event.getAddress().toString()) ? "aussieanarchy" : "2b2tau";
             File file = new File(get().getDataFolder(), "icons/" + name + ".png");
 
-            event.setServerIcon(get().getServer().loadServerIcon(file));
+            event.setServerIcon(Bukkit.loadServerIcon(file));
         } catch (Exception e) {
             e.printStackTrace();
         }

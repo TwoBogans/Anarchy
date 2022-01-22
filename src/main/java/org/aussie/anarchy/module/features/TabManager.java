@@ -43,7 +43,7 @@ public class TabManager extends Module implements Runnable {
                 StringBuilder header = new StringBuilder();
                 StringBuilder footer = new StringBuilder();
                 List<String> headerList, footerList;
-                if (Util.containsDomain(player, Messages.TAB1DOMAIN, "debug.2b2t.com.au")) {
+                if (Util.containsDomain(player, Messages.TAB1DOMAIN, "aussieanarchy.org")) {
                     headerList = Messages.HEADER1.stream().map((str) -> this.parseText(player, str)).collect(Collectors.toList());
                     footerList = Messages.FOOTER1.stream().map((str) -> this.parseText(player, str)).collect(Collectors.toList());
                 } else {

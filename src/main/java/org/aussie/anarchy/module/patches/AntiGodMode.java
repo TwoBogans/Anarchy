@@ -24,7 +24,7 @@ public class AntiGodMode extends Module {
 
     @EventHandler
     private void on(EntityDamageByEntityEvent e) {
-        if (this.isEnabled() && e.getDamager() instanceof Player && e.getDamage() > (double)Config.MAXDAMAGE) {
+        if (e.getDamager() instanceof Player && e.getDamage() > (double)Config.MAXDAMAGE) {
             e.setCancelled(true);
         }
 
@@ -32,18 +32,15 @@ public class AntiGodMode extends Module {
 
     @EventHandler
     private void on(PlayerMoveEvent e) {
-        if (this.isEnabled()) {
-            Player p = e.getPlayer();
-            Location from = e.getFrom();
-            if (p.isInsideVehicle() && !Objects.requireNonNull(p.getVehicle()).isValid()) {
-                p.getVehicle().eject();
-                e.setTo(from);
-            }
-
-            if (!p.isValid() && !p.isDead()) {
-                p.kickPlayer("");
-            }
+        Player p = e.getPlayer();
+        Location from = e.getFrom();
+        if (p.isInsideVehicle() && !Objects.requireNonNull(p.getVehicle()).isValid()) {
+            p.getVehicle().eject();
+            e.setTo(from);
         }
 
+        if (!p.isValid() && !p.isDead()) {
+            p.kickPlayer("");
+        }
     }
 }

@@ -22,10 +22,12 @@ public class Playtime extends Command {
         super("playtime");
     }
 
+    // TODO FIX when using /jd <playername> it will bring up your own jd as well
     public boolean onCommand(@NotNull CommandSender sender, @NotNull org.bukkit.command.Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player) {
             Player player = (Player)sender;
-            if (args.length > 0 && this.tryOfflineMessage(player, args)) {
+            if (args.length > 0) {
+                this.tryOfflineMessage(player, args);
                 return true;
             }
 
@@ -39,7 +41,7 @@ public class Playtime extends Command {
         return true;
     }
 
-    private boolean tryOfflineMessage(@NotNull CommandSender sender, @NotNull String[] args) {
+    private void tryOfflineMessage(@NotNull CommandSender sender, @NotNull String[] args) {
         Player target = Bukkit.getPlayer(args[0]);
         if (target == null) {
             try {
@@ -48,10 +50,8 @@ public class Playtime extends Command {
                 ChatUtils.message(sender, Messages.PLAYER_NOT_FOUND.replace("%player%", args[0]));
             }
 
-            return true;
         } else {
             this.sendPlaytimeMessage(sender, target);
-            return false;
         }
     }
 
@@ -90,10 +90,10 @@ public class Playtime extends Command {
 
     private String getFormattedTime(int i) {
         int ticks = i / 20;
-        int days = (int) TimeUnit.SECONDS.toDays((long)ticks);
-        int hours = (int)(TimeUnit.SECONDS.toHours((long)ticks) - TimeUnit.DAYS.toHours((long)days));
-        int minutes = (int)(TimeUnit.SECONDS.toMinutes((long)ticks) - TimeUnit.HOURS.toMinutes((long)hours) - TimeUnit.DAYS.toMinutes((long)days));
-        int seconds = (int)(TimeUnit.SECONDS.toSeconds((long)ticks) - TimeUnit.MINUTES.toSeconds((long)minutes) - TimeUnit.HOURS.toSeconds((long)hours) - TimeUnit.DAYS.toSeconds((long)days));
+        int days = (int) TimeUnit.SECONDS.toDays(ticks);
+        int hours = (int)(TimeUnit.SECONDS.toHours(ticks) - TimeUnit.DAYS.toHours(days));
+        int minutes = (int)(TimeUnit.SECONDS.toMinutes(ticks) - TimeUnit.HOURS.toMinutes(hours) - TimeUnit.DAYS.toMinutes(days));
+        int seconds = (int)(TimeUnit.SECONDS.toSeconds(ticks) - TimeUnit.MINUTES.toSeconds(minutes) - TimeUnit.HOURS.toSeconds(hours) - TimeUnit.DAYS.toSeconds((long)days));
         if (days != 0) {
             return "&a" + days + "&3 days, &a" + hours + "&3 hours, &a" + minutes + "&3 mins, &a" + seconds + "&3 secs";
         } else if (hours != 0) {

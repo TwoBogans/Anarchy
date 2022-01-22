@@ -42,7 +42,7 @@ public class AntiRedstone extends Module {
                 this.frozenChunks.contains(chunk) ||
                 this.checkChunk(chunk, block.getType())
         ) {
-            if (!this.frozenChunks.contains(chunk)) {
+            if (!this.frozenChunks.contains(chunk) && Config.FREEZECHUNK) {
                 this.frozenChunks.add(chunk);
             } else {
                 event.setNewCurrent(0);
@@ -69,7 +69,7 @@ public class AntiRedstone extends Module {
         this.pistonMap.putIfAbsent(chunk, 0);
         this.pistonMap.computeIfPresent(chunk, (c, i) -> i++);
 
-        if (this.checkChunk(chunk, material) || this.pistonMap.get(chunk) > Config.PISTONCHUNKMAX) {
+        if ((this.checkChunk(chunk, material) || this.pistonMap.get(chunk) > Config.PISTONCHUNKMAX)  && Config.FREEZECHUNK) {
             this.frozenChunks.add(chunk);
         }
 
@@ -92,7 +92,7 @@ public class AntiRedstone extends Module {
         if (this.checkChunk(chunk, e.getBlock().getType()) || this.frozenChunks.contains(chunk)) {
             e.setCancelled(true);
 
-            if (!this.frozenChunks.contains(chunk)) {
+            if (!this.frozenChunks.contains(chunk) && Config.FREEZECHUNK) {
                 this.frozenChunks.add(chunk);
             }
 

@@ -42,7 +42,7 @@ public class SpeedLimit extends Module implements Runnable {
                 if (p.isInsideVehicle() && p.getVehicle() != null) {
                     Entity vehicle = p.getVehicle();
                     if (SpeedLimit.this.vehicleLocs.get(vehicle) != null) {
-                        Location prevLocation = ((Location)SpeedLimit.this.vehicleLocs.get(vehicle)).clone();
+                        Location prevLocation = SpeedLimit.this.vehicleLocs.get(vehicle).clone();
                         Location newLocation = vehicle.getLocation().clone();
                         Vector vector = newLocation.subtract(prevLocation).toVector();
                         if (vector.clone().normalize().getY() < -0.95D) {
@@ -70,10 +70,8 @@ public class SpeedLimit extends Module implements Runnable {
 
     public void run() {
         this.maxSpeed = Config.SPEEDLIMITMAXBPS / 20.0D * Util.getTPS();
-        Iterator online = Bukkit.getOnlinePlayers().iterator();
 
-        while(online.hasNext()) {
-            Player player = (Player)online.next();
+        for (Player player : Bukkit.getOnlinePlayers()) {
             if (player == null) {
                 return;
             }

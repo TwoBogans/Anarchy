@@ -1,6 +1,5 @@
 package org.aussie.anarchy.module.patches;
 
-import org.aussie.anarchy.hook.hooks.SparkHook;
 import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.Util;
 import org.aussie.anarchy.util.config.Config;
@@ -64,6 +63,7 @@ public class AntiWitherLag extends Module {
                 ) {
                     double distance = wither.getLocation().distance(new Location(wither.getWorld(), 0.0D, 128.0D, 0.0D));
                     if (distance < (double) Config.ANTIWITHERRANGE) {
+                        get().getScheduler().runTaskLater(get(), wither::remove, 20L);
                         e.setCancelled(true);
                     }
                 }
@@ -83,7 +83,7 @@ public class AntiWitherLag extends Module {
     private void processEntity(Entity entity) {
         if (this.isEnabled()) {
             if (entity instanceof WitherSkull) {
-                get().getScheduler().runTaskLater(get(), entity::remove, (long)Config.ANTIWITHERSKULLTICKS);
+                get().getScheduler().runTaskLater(get(), entity::remove, Config.ANTIWITHERSKULLTICKS);
             } else {
                 if (entity instanceof Wither) {
                     Wither wither = (Wither) entity;

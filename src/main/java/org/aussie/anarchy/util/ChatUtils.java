@@ -23,11 +23,13 @@ public class ChatUtils {
     }
 
     public static void sendJoinMessage(Player player, Player target) {
-        String playerName = ChatColor.stripColor(player.getDisplayName());
-        ComponentBuilder name = new ComponentBuilder(playerName);
-        name.event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, Messages.JOIN_CLICK.replace("%player%", playerName)));
-        name.event(new HoverEvent(net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(Messages.JOIN_HOVER.replace("%player%", playerName))).create()));
-        ComponentBuilder builder = new ComponentBuilder(Messages.JOIN_MESSAGE.replace("%player%", (new TextComponent(name.create())).toLegacyText()));
+        String playerName = net.md_5.bungee.api.ChatColor.stripColor(player.getDisplayName());
+        ComponentBuilder builder = new ComponentBuilder(net.md_5.bungee.api.ChatColor.GRAY + playerName);
+        builder.event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/w " + net.md_5.bungee.api.ChatColor.stripColor(playerName) + " "));
+        builder.event(new HoverEvent(net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(net.md_5.bungee.api.ChatColor.GOLD + "Message " + net.md_5.bungee.api.ChatColor.DARK_AQUA + playerName)).create()));
+        builder.append(" ").reset();
+        builder.append(new TextComponent(net.md_5.bungee.api.ChatColor.GRAY + "joined"));
+        builder.color(net.md_5.bungee.api.ChatColor.GRAY);
         target.spigot().sendMessage(builder.create());
     }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 public final class Config {
     public static boolean ANTINETHERROOF;
+    public static boolean ANTIBURROW;
     public static boolean ANTIINSTANTMINE;
     public static boolean ANTIBEDROCKHOLES;
     public static boolean ANTIBOATFLY;
@@ -53,6 +54,7 @@ public final class Config {
     public static long VETTIME;
     public static long WORLDSTATSTIME;
     public static double SPEEDLIMITMAXBPS;
+    public static double ANTIBURROWDAMAGE;
     public static String RANDOMSPAWNWORLD;
     public static List<String> CHUNKFREEZEMATERIALS;
     public static List<String> COMMANDSWHITELISTED;

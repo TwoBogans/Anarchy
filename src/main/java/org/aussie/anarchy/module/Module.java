@@ -4,11 +4,11 @@ import org.aussie.anarchy.Anarchy;
 import org.aussie.anarchy.util.IAnarchy;
 import org.bukkit.event.Listener;
 
+import java.util.Random;
+
 public abstract class Module implements Listener, IAnarchy {
     public String name = this.getClass().getSimpleName();
-
-    public Module() {
-    }
+    public Random random = new Random();
 
     public abstract boolean isEnabled();
 

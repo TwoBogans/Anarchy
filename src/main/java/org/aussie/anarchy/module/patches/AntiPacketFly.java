@@ -31,7 +31,7 @@ public class AntiPacketFly extends Module {
                     Material b = e.getLocation().getBlock().getType();
 
                     boolean solid = !b.equals(Material.AIR) && (b.isOccluding() || b.isSolid());
-                    
+
                     if (!Config.ANTIPACKETFLYONLYSOLID || solid) {
                         if (AntiPacketFly.this.vl.get(e.getUniqueId()) != null) {
                             if (AntiPacketFly.this.vl.get(e.getUniqueId()) > Config.MAXPACKETFLYVL) {

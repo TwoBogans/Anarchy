@@ -24,12 +24,9 @@ import java.util.Random;
 
 public class RandomMOTD extends Module {
 
-    private final Random random = new Random();
     private final HashMap<String, Boolean> domainMap = new HashMap<>();
 
-    public RandomMOTD() {
-    }
-
+    @Override
     public boolean isEnabled() {
         return Motds.ENABLED;
     }
@@ -52,9 +49,7 @@ public class RandomMOTD extends Module {
         return this;
     }
 
-    @EventHandler(
-        priority = EventPriority.HIGH
-    )
+    @EventHandler(priority = EventPriority.HIGH)
     private void on(ServerListPingEvent event) {
         event.setMotd(this.getFormattedMotd());
 

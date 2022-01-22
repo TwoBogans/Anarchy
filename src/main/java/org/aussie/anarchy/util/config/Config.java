@@ -48,7 +48,8 @@ public final class Config {
     public static int ANTIWITHERRANGE;
     public static int ANTILIQUIDLAGTPS;
     public static int ANTILIQUIDLAGRADIUS;
-    public static int RANDOMSPAWNRADIUS;
+    public static int RANDOMSPAWNRADIUSMIN;
+    public static int RANDOMSPAWNRADIUSMAX;
     public static int ANTICHUNKBANMAX;
     public static int ANTICHUNKBANTIME;
     public static int WORLDSTATSTICKS;

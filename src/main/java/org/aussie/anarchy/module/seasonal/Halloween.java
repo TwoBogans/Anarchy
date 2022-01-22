@@ -51,7 +51,6 @@ public class Halloween extends Module {
         if (event.getBlock().getType() == Material.PUMPKIN) {
             this.createExplosion(event.getBlock());
         }
-
     }
 
 //    @EventHandler
@@ -70,7 +69,6 @@ public class Halloween extends Module {
         if (e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.PUMPKIN) {
             this.createExplosion(e.getClickedBlock());
         }
-
     }
 
     @EventHandler

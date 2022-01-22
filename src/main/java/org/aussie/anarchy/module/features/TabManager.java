@@ -52,6 +52,7 @@ public class TabManager extends Module implements Runnable {
                 }
 
                 int i;
+
                 for (i = 0; i < headerList.size(); ++i) {
                     header.append(headerList.get(i)).append(i == footerList.size() - 1 ? "" : "\n");
                 }

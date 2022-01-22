@@ -17,7 +17,40 @@ public class ModuleManager {
     private final List<Module> modules = new ArrayList<>();
 
     public ModuleManager(Anarchy plugin) {
-        this.addModules(new AntiSpam(), new MaxYLevels(), new Miscellaneous(), new NoGlobalThunder(), new RandomMOTD(), new SpeedLimit(), new TabManager(), new VeteranCheck(), new WitherSound(), new WorldStats(), new AntiBedrockHoles(), new AntiBoatFly(), new AntiBoatFly(), new AntiChunkBan(), new AntiDupe(), new AntiElytra(), new AntiExploits(), new AntiGodMode(), new AntiInstantMine(), new AntiLag(), new AntiLiquidLag(), new AntiNoCom(), new AntiPacketFly(), new AntiProjectileVelocity(), new AntiRedstone(), new AntiWitherLag(), new Anniversary(), new Halloween());
+        this.addModules(
+                // Features
+                new AntiSpam(),
+                new Miscellaneous(),
+//                new NetherCactusDupe(),
+                new NoGlobalThunder(),
+                new RandomMOTD(),
+                new RandomSpawn(),
+                new SpeedLimit(),
+                new TabManager(),
+                new VeteranCheck(),
+                new WitherSound(),
+                new WorldStats(),
+                // Patches
+                new AntiBedrockHoles(),
+                new AntiBoatFly(),
+                new AntiBurrow(),
+                new AntiChunkBan(),
+                new AntiDupe(),
+                new AntiElytra(),
+                new AntiExploits(),
+                new AntiGodMode(),
+                new AntiInstantMine(),
+                new AntiLag(),
+                new AntiLiquidLag(),
+                new AntiNoCom(),
+                new AntiPacketFly(),
+                new AntiProjectileVelocity(),
+                new AntiRedstone(),
+                new AntiWitherLag(),
+                // Seasonal
+                new Anniversary(),
+                new Halloween()
+        );
         AtomicInteger i = new AtomicInteger();
         this.modules.forEach((p) -> {
             if (p.isEnabled()) {

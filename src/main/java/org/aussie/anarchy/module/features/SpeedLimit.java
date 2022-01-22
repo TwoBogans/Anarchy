@@ -22,18 +22,17 @@ import org.bukkit.util.Vector;
 import java.util.*;
 
 public class SpeedLimit extends Module implements Runnable {
-    private final HashMap<Entity, Location> vehicleLocs = new HashMap();
-    private final HashMap<Player, Location> locations = new HashMap();
-    private final Set<Player> teleported = new HashSet();
+    private final HashMap<Entity, Location> vehicleLocs = new HashMap<>();
+    private final HashMap<Player, Location> locations = new HashMap<>();
+    private final Set<Player> teleported = new HashSet<>();
     private double maxSpeed;
 
-    public SpeedLimit() {
-    }
-
+    @Override
     public boolean isEnabled() {
         return Config.SPEEDLIMIT;
     }
 
+    @Override
     public Module onEnable() {
         get().getScheduler().scheduleSyncRepeatingTask(get(), this, 0L, 20L);
         get().getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.HIGHEST, PacketType.Play.Client.USE_ENTITY) {

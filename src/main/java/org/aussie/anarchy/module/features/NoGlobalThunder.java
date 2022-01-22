@@ -15,13 +15,13 @@ import org.bukkit.Server;
 import org.bukkit.Sound;
 
 public class NoGlobalThunder extends Module {
-    public NoGlobalThunder() {
-    }
 
+    @Override
     public boolean isEnabled() {
         return Config.NOGLOBALTHUNDER;
     }
 
+    @Override
     public Module onEnable() {
         get().getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(get(), ListenerPriority.HIGHEST, PacketType.Play.Server.NAMED_SOUND_EFFECT) {
             public void onPacketSending(PacketEvent e) {

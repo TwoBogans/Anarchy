@@ -8,10 +8,10 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 import java.util.HashSet;
-import java.util.Iterator;
 
 public class RandomSpawn extends Module {
     private final HashSet<Material> disallowedMaterials = new HashSet<>();
@@ -35,18 +35,15 @@ public class RandomSpawn extends Module {
         return this;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     private void on(PlayerRespawnEvent e) {
         Player p = e.getPlayer();
         if (p.getBedSpawnLocation() == null) {
             Location spawn = this.getRandomRespawn();
-            if (spawn == null) {
-                return;
-            }
-
             e.setRespawnLocation(spawn);
+        } else {
+            e.setRespawnLocation(p.getBedSpawnLocation());
         }
-
     }
 
     private Location getRandomRespawn() {
@@ -54,8 +51,8 @@ public class RandomSpawn extends Module {
             World w = Bukkit.getWorld(Config.RANDOMSPAWNWORLD);
 
             if (w != null) {
-                int x = this.randomRange(-Config.RANDOMSPAWNRADIUS, Config.RANDOMSPAWNRADIUS);
-                int z = this.randomRange(-Config.RANDOMSPAWNRADIUS, Config.RANDOMSPAWNRADIUS);
+                int x = this.randomRange();
+                int z = this.randomRange();
 
                 Location spawn = new Location(w, x, w.getHighestBlockYAt(x, z), z);
 
@@ -74,7 +71,7 @@ public class RandomSpawn extends Module {
         }
     }
 
-    private int randomRange(int min, int max) {
-        return min + (int)(Math.random() * (double) (max - min + 1));
+    private int randomRange() {
+        return random.nextInt(Config.RANDOMSPAWNRADIUSMAX - Config.RANDOMSPAWNRADIUSMIN) + Config.RANDOMSPAWNRADIUSMIN;
     }
 }

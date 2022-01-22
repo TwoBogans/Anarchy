@@ -19,13 +19,13 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import java.util.Iterator;
 
 public class WitherSound extends Module {
-    public WitherSound() {
-    }
 
+    @Override
     public boolean isEnabled() {
         return Config.WITHERSOUND;
     }
 
+    @Override
     public Module onEnable() {
         get().getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(get(), ListenerPriority.HIGHEST, PacketType.Play.Server.WORLD_EVENT) {
             public void onPacketSending(PacketEvent event) {

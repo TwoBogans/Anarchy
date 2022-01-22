@@ -16,15 +16,12 @@ import java.util.UUID;
 public class VeteranCheck extends Module {
     static LuckPermsHook luckPerms;
 
-    public VeteranCheck() {
-    }
-
     public boolean isEnabled() {
         return Config.VETCHECK;
     }
 
     public Module onEnable() {
-        luckPerms = (LuckPermsHook) get().getHookManager().getHook(LuckPermsHook.class);
+        luckPerms = get().getHookManager().getHook(LuckPermsHook.class);
         return this;
     }
 

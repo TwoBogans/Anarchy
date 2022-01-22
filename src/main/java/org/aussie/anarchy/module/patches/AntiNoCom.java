@@ -14,13 +14,13 @@ import org.aussie.anarchy.util.config.Config;
 import org.aussie.anarchy.util.packet.wrappers.WrapperPlayClientBlockDig;
 
 public class AntiNoCom extends Module {
-    public AntiNoCom() {
-    }
 
+    @Override
     public boolean isEnabled() {
         return Config.ANTINOCOM && CompatUtil.is1_12();
     }
 
+    @Override
     public Module onEnable() {
         get().getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(get(), ListenerPriority.NORMAL, PacketType.Play.Client.USE_ITEM) {
             public void onPacketReceiving(PacketEvent event) {

@@ -25,13 +25,12 @@ import java.util.UUID;
 public class AntiLag extends Module {
     private final HashSet<UUID> vl = new HashSet<>();
 
-    public AntiLag() {
-    }
-
+    @Override
     public boolean isEnabled() {
         return Config.ANTILAG;
     }
 
+    @Override
     public Module onEnable() {
         get().getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(get(), ListenerPriority.HIGH, PacketType.Play.Server.SPAWN_ENTITY) {
             public void onPacketSending(PacketEvent event) {

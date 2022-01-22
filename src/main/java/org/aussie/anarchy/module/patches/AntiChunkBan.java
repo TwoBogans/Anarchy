@@ -16,15 +16,14 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class AntiChunkBan extends Module {
-    private static final Object2LongArrayMap<Block> BLOCKS = new Object2LongArrayMap();
+    private static final Object2LongArrayMap<Block> BLOCKS = new Object2LongArrayMap<>();
 
-    public AntiChunkBan() {
-    }
-
+    @Override
     public boolean isEnabled() {
         return Config.ANTICHUNKBAN;
     }
 
+    @Override
     public Module onEnable() {
         get().getScheduler().runTaskTimerAsynchronously(get(), () -> {
 

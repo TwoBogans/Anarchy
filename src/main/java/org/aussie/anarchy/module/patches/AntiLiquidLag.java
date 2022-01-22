@@ -13,15 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AntiLiquidLag extends Module {
-    private final List<Chunk> frozenChunks = new ArrayList();
+    private final List<Chunk> frozenChunks = new ArrayList<>();
 
-    public AntiLiquidLag() {
-    }
-
+    @Override
     public boolean isEnabled() {
         return Config.ANTILIQUIDLAG;
     }
 
+    @Override
     public Module onEnable() {
         get().getScheduler().scheduleSyncRepeatingTask(get(), this.frozenChunks::clear, 0L, 300L);
         return this;

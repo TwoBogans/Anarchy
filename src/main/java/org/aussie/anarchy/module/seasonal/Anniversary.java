@@ -16,18 +16,20 @@ import java.util.*;
 public class Anniversary extends Module {
 
     private static final Map<Player, Long> users = new HashMap<>();
+    private static boolean enabled = false;
 
     @Override
     public boolean isEnabled() {
         DateTime now = DateTime.now(DateTimeZone.forID("Australia/Sydney"));
-        return now.getMonthOfYear() == 1 && (now.getDayOfMonth() == 20 || now.getDayOfMonth() == 21) ;
+        enabled = now.getMonthOfYear() == 1 && (now.getDayOfMonth() == 20 || now.getDayOfMonth() == 21);
+        return enabled;
     }
 
     @Override
     public Module onEnable() { return this; }
 
     public static boolean onCommand(CommandSender sender) {
-        if (!get().isEnabled()) return false;
+        if (!enabled) return false;
 
         if (sender instanceof Player) {
             Player player = (Player) sender;

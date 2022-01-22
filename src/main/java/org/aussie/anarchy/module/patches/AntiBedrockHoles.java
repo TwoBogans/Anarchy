@@ -10,13 +10,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.world.ChunkLoadEvent;
 
 public class AntiBedrockHoles extends Module {
-    public AntiBedrockHoles() {
-    }
 
+    @Override
     public boolean isEnabled() {
         return Config.ANTIBEDROCKHOLES && CompatUtil.is1_12();
     }
 
+    @Override
     public Module onEnable() {
         return this;
     }

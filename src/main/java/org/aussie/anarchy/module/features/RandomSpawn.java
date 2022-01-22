@@ -14,17 +14,15 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 public class RandomSpawn extends Module {
-    private final HashSet<Material> disallowedMaterials = new HashSet();
+    private final HashSet<Material> disallowedMaterials = new HashSet<>();
 
-    public RandomSpawn() {
-    }
-
+    @Override
     public boolean isEnabled() {
         return Config.RANDOMSPAWNENABLED;
     }
 
+    @Override
     public Module onEnable() {
-
         for (String string : Config.RANDOMSPAWNBLOCKS) {
             Material material = Material.matchMaterial(string);
             if (material == null) {
@@ -34,7 +32,6 @@ public class RandomSpawn extends Module {
 
             this.disallowedMaterials.add(material);
         }
-
         return this;
     }
 
@@ -53,27 +50,28 @@ public class RandomSpawn extends Module {
     }
 
     private Location getRandomRespawn() {
-        Location loc = null;
-
-        for(int i = 0; i < 100; ++i) {
+        while (true) {
             World w = Bukkit.getWorld(Config.RANDOMSPAWNWORLD);
-            if (w == null) {
-                return null;
-            }
 
-            int x = this.randomRange(-Config.RANDOMSPAWNRADIUS, Config.RANDOMSPAWNRADIUS);
-            int z = this.randomRange(-Config.RANDOMSPAWNRADIUS, Config.RANDOMSPAWNRADIUS);
+            if (w != null) {
+                int x = this.randomRange(-Config.RANDOMSPAWNRADIUS, Config.RANDOMSPAWNRADIUS);
+                int z = this.randomRange(-Config.RANDOMSPAWNRADIUS, Config.RANDOMSPAWNRADIUS);
 
-            int y = w.getHighestBlockYAt(x, z);
+                Location spawn = new Location(w, x, w.getHighestBlockYAt(x, z), z);
 
-            loc = new Location(w, x, y, z);
+                if (w.getNearbyPlayers(spawn, 64).size() >= 1) {
+                    continue;
+                }
 
-            if (!this.disallowedMaterials.contains(loc.add(0.0D, -1.0D, 0.0D).getBlock().getType())) {
-                return loc;
+                Location below = spawn.add(0.0D, -1.0D, 0.0D);
+
+                if (disallowedMaterials.contains(below.getBlock().getType())) {
+                    continue;
+                }
+
+                return spawn;
             }
         }
-
-        return loc;
     }
 
     private int randomRange(int min, int max) {

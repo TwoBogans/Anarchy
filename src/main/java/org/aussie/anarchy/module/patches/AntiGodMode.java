@@ -11,13 +11,13 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import java.util.Objects;
 
 public class AntiGodMode extends Module {
-    public AntiGodMode() {
-    }
 
+    @Override
     public boolean isEnabled() {
         return Config.ANTIGODMODE;
     }
 
+    @Override
     public Module onEnable() {
         return this;
     }

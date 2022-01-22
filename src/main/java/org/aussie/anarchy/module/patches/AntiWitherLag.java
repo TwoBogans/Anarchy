@@ -15,13 +15,13 @@ import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
 public class AntiWitherLag extends Module {
-    public AntiWitherLag() {
-    }
 
+    @Override
     public boolean isEnabled() {
         return Config.ANTIWITHERLAG;
     }
 
+    @Override
     public Module onEnable() {
         return this;
     }

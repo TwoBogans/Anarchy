@@ -27,13 +27,12 @@ public class AntiDupe extends Module {
     private static final HashMap<UUID, Location> playerLocation = new HashMap<>();
     private static final HashMap<UUID, UUID> playerEntity = new HashMap<>();
 
-    public AntiDupe() {
-    }
-
+    @Override
     public boolean isEnabled() {
         return Config.ANTIDUPE;
     }
 
+    @Override
     public Module onEnable() {
         Anarchy.getPlugin().getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.HIGH, PacketType.Play.Client.VEHICLE_MOVE) {
             public void onPacketReceiving(PacketEvent e) {

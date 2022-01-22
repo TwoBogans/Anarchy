@@ -11,16 +11,15 @@ import org.bukkit.event.block.BlockBreakEvent;
 import java.util.HashMap;
 
 public class AntiInstantMine extends Module {
-    private final HashMap<Player, Long> timer = new HashMap();
-    private final HashMap<Player, Block> block = new HashMap();
+    private final HashMap<Player, Long> timer = new HashMap<>();
+    private final HashMap<Player, Block> block = new HashMap<>();
 
-    public AntiInstantMine() {
-    }
-
+    @Override
     public boolean isEnabled() {
         return Config.ANTIINSTANTMINE;
     }
 
+    @Override
     public Module onEnable() {
         return this;
     }

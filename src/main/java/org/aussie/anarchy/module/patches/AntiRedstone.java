@@ -22,10 +22,12 @@ public class AntiRedstone extends Module {
     private final HashMap<Chunk, Integer> currentMap = new HashMap<>();
     private final HashMap<Chunk, Integer> pistonMap = new HashMap<>();
 
+    @Override
     public boolean isEnabled() {
         return Config.ANTIREDSTONE;
     }
 
+    @Override
     public Module onEnable() {
         Anarchy.getPlugin().getScheduler().scheduleSyncRepeatingTask(Anarchy.getPlugin(), this.frozenChunks::clear, 0L, 300L);
         return this;

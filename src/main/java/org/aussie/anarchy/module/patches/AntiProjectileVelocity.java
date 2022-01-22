@@ -10,13 +10,13 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.util.Vector;
 
 public class AntiProjectileVelocity extends Module {
-    public AntiProjectileVelocity() {
-    }
 
+    @Override
     public boolean isEnabled() {
         return Config.ANTIPROJECTILEVELOCITY;
     }
 
+    @Override
     public Module onEnable() {
         return this;
     }

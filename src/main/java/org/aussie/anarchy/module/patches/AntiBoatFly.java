@@ -21,13 +21,12 @@ import java.util.UUID;
 public class AntiBoatFly extends Module {
     private final HashMap<UUID, Integer> vl = new HashMap<>();
 
-    public AntiBoatFly() {
-    }
-
+    @Override
     public boolean isEnabled() {
         return Config.ANTIBOATFLY;
     }
 
+    @Override
     public Module onEnable() {
         get().getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.HIGHEST, PacketType.Play.Client.USE_ENTITY) {
             public void onPacketReceiving(PacketEvent event) {

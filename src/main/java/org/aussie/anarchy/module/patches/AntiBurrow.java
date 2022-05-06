@@ -23,10 +23,10 @@ public class AntiBurrow extends Module {
     private void on(PlayerMoveEvent e) {
         Player player = e.getPlayer();
         Location loc = player.getLocation();
+
         int x = loc.getBlockX();
         int y = loc.getBlockY();
         int z = loc.getBlockZ();
-        double yy = loc.getY();
 
         Material b = loc.getWorld().getBlockAt(x, y, z).getType();
 
@@ -37,14 +37,14 @@ public class AntiBurrow extends Module {
         switch (b) {
             case ENDER_CHEST:
             case SOUL_SAND: {
-                if (yy - y < 0.875) {
+                if (loc.getY() - y < 0.875) {
                     player.damage(Config.ANTIBURROWDAMAGE);
                 }
                 break;
             }
             case LEGACY_ENCHANTMENT_TABLE:
             case ENCHANTING_TABLE: {
-                if (yy - y < 0.75) {
+                if (loc.getY() - y < 0.75) {
                     player.damage(Config.ANTIBURROWDAMAGE);
                 }
                 break;

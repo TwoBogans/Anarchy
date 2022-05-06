@@ -1,6 +1,7 @@
 package org.aussie.anarchy.module.seasonal;
 
 import org.aussie.anarchy.module.Module;
+import org.aussie.anarchy.util.config.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -20,16 +21,15 @@ public class Anniversary extends Module {
 
     @Override
     public boolean isEnabled() {
-        DateTime now = DateTime.now(DateTimeZone.forID("Australia/Sydney"));
-        enabled = now.getMonthOfYear() == 1 && (now.getDayOfMonth() == 20 || now.getDayOfMonth() == 21);
-        return enabled;
+        enabled = getTime().getMonthOfYear() == 1 && (getTime().getDayOfMonth() == 20 || getTime().getDayOfMonth() == 21);
+        return enabled || Config.JIHADENABLED;
     }
 
     @Override
     public Module onEnable() { return this; }
 
     public static boolean onCommand(CommandSender sender) {
-        if (!enabled) return false;
+        if (!(enabled || Config.JIHADENABLED)) return false;
 
         if (sender instanceof Player) {
             Player player = (Player) sender;

@@ -42,17 +42,14 @@ public class Util {
         if (sender instanceof ConsoleCommandSender) {
             return true;
         } else {
-            return sender instanceof Player ? isAdmin((Player)sender) : false;
+            return sender instanceof Player && isAdmin((Player) sender);
         }
     }
 
     public static int countEntities(Entity[] e, EntityType type) {
         int count = 0;
-        Entity[] var3 = e;
-        int var4 = e.length;
 
-        for(int var5 = 0; var5 < var4; ++var5) {
-            Entity entity = var3[var5];
+        for (Entity entity : e) {
             if (entity.getType().equals(type)) {
                 ++count;
             }
@@ -63,7 +60,7 @@ public class Util {
 
     public static double getTPS() {
         try {
-            return Anarchy.getPlugin().getHookManager().getHook(SparkHook.class).getTPS_10SEC();
+            return Anarchy.getHookManager().getHook(SparkHook.class).getTPS_10SEC();
         } catch (Exception var1) {
             return Bukkit.getServer().getTPS()[0];
         }
@@ -79,11 +76,7 @@ public class Util {
     }
 
     public static boolean containsDomain(Player p, String... domains) {
-        String[] var2 = domains;
-        int var3 = domains.length;
-
-        for(int var4 = 0; var4 < var3; ++var4) {
-            String domain = var2[var4];
+        for (String domain : domains) {
             if (domain == null) {
                 return false;
             }
@@ -97,16 +90,12 @@ public class Util {
     }
 
     public static HashSet<Block> getBlocksInChunk(Chunk chunk, Material... lookingFor) {
-        HashSet<Block> locations = new HashSet();
+        HashSet<Block> locations = new HashSet<>();
 
         for(int x = 0; x < 16; ++x) {
             for(int z = 0; z < 16; ++z) {
                 for(int y = 0; y < 256; ++y) {
-                    Material[] var6 = lookingFor;
-                    int var7 = lookingFor.length;
-
-                    for(int var8 = 0; var8 < var7; ++var8) {
-                        Material m = var6[var8];
+                    for (Material m : lookingFor) {
                         Block block = chunk.getBlock(x, y, z);
                         if (block.getType() == m) {
                             locations.add(block);

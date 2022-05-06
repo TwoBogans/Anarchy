@@ -2,6 +2,7 @@ package org.aussie.anarchy.module.patches;
 
 import it.unimi.dsi.fastutil.objects.Object2LongArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectIterator;
+import org.aussie.anarchy.Anarchy;
 import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.Util;
 import org.aussie.anarchy.util.config.Config;
@@ -25,7 +26,7 @@ public class AntiChunkBan extends Module {
 
     @Override
     public Module onEnable() {
-        get().getScheduler().runTaskTimerAsynchronously(get(), () -> {
+        Anarchy.getScheduler().runTaskTimerAsynchronously(Anarchy.getPlugin(), () -> {
 
             for (Map.Entry<Block, Long> blockLongEntry : BLOCKS.entrySet()) {
                 Block block = blockLongEntry.getKey();
@@ -35,7 +36,7 @@ public class AntiChunkBan extends Module {
                 }
 
                 if (System.currentTimeMillis() - blockLongEntry.getValue() > TimeUnit.SECONDS.toMillis(Config.ANTICHUNKBANTIME)) {
-                    Bukkit.getServer().getScheduler().runTask(get(), () -> block.setType(Material.AIR));
+                    Bukkit.getServer().getScheduler().runTask(Anarchy.getPlugin(), () -> block.setType(Material.AIR));
                     this.log("Removed " + block.getType() + " has been removed after " + Config.ANTICHUNKBANTIME + "s");
                     BLOCKS.remove(block);
                 }
@@ -49,6 +50,7 @@ public class AntiChunkBan extends Module {
     private void on(BlockPlaceEvent e) {
         Block block = e.getBlock();
         Chunk chunk = block.getChunk();
+
         if (Config.ANTICHUNKBANBLOCKS.contains(block.getType().toString()) && Util.countChunk(chunk, block.getType()) > Config.ANTICHUNKBANMAX) {
             BLOCKS.put(block, System.currentTimeMillis());
         }

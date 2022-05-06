@@ -66,28 +66,113 @@ CONFIG_HELP:
   - "&6-----------------------------------------------------"
 CONFIG_RELOADED:
   - "&aConfig \"%config%\" reloaded successfully!"
-HEADER:
+AU_COM_2B2T_1:
   - ""
   - "&7&l&o2BOGANS"
   - "&7&l&o2TRADIES"
   - ""
-FOOTER:
+AU_COM_2B2T_2:
   - ""
   - "           &a%tps% &3tps - %players% players - %ping% &3ping - %server_uptime% uptime            "
   - ""
-  - "           &7donate: www.2b2t.com.au           "
-  - "           &7contact: 2b2tau@gmail.com           "
+  - "           &7discord.gg/australiamc           "
+  - "           &7donate.2b2t.com.au           "
+  - "           &7support@2b2t.com.au           "
   - ""
-TAB1DOMAIN: "aussieanarchy.org"
-HEADER1:
+AU_ORG_2B2T_1:
+  - ""
+  - "&7&l&o2BOGANS"
+  - "&7&l&o2TRADIES"
+  - ""
+AU_ORG_2B2T_2:
+  - ""
+  - "           &a%tps% &3tps - %players% players - %ping% &3ping - %server_uptime% uptime            "
+  - ""
+  - "           &7discord.gg/australiamc           "
+  - "           &7donate.2b2t.org.au           "
+  - "           &7support@2b2t.org.au           "
+  - ""
+AUSSIEANARCHY_ORG_1:
   - ""
   - "&7&l&oAUSSIE"
   - "&7&l&oANARCHY"
   - ""
-FOOTER1:
+AUSSIEANARCHY_ORG_2:
   - ""
   - "           &a%tps% &3tps - %players% players - %ping% &3ping - %server_uptime% uptime            "
   - ""
+  - "           &7discord.gg/australiamc           "
   - "           &7donate.aussieanarchy.org           "
-  - "           &7contact@aussieanarchy.org         "
+  - "           &7support@aussieanarchy.org         "
   - ""
+WHITELISTED_UNICODE:
+  - ' '
+  - '\u0000'
+  - 'a'
+  - 'b'
+  - 'c'
+  - 'd'
+  - 'e'
+  - 'f'
+  - 'g'
+  - 'h'
+  - 'i'
+  - 'j'
+  - 'k'
+  - 'l'
+  - 'm'
+  - 'n'
+  - 'o'
+  - 'p'
+  - 'q'
+  - 'r'
+  - 's'
+  - 't'
+  - 'u'
+  - 'v'
+  - 'w'
+  - 'x'
+  - 'y'
+  - 'z'
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - '6'
+  - '7'
+  - '8'
+  - '9'
+  - '0'
+  - '!'
+  - '@'
+  - '#'
+  - '$'
+  - '%'
+  - '^'
+  - '&'
+  - '*'
+  - '('
+  - ')'
+  - '_'
+  - '-'
+  - '+'
+  - '='
+  - '{'
+  - '['
+  - '}'
+  - ']'
+  - '|'
+  - '\'
+  - ':'
+  - ';'
+  - '"'
+  - "'"
+  - '<'
+  - ','
+  - '>'
+  - '.'
+  - '?'
+  - '/'
+  - '~'
+  - '`'

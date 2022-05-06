@@ -22,7 +22,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TabManager extends Module implements Runnable {
+public class TabManager extends Module {
+
     public TabManager() {
     }
 
@@ -31,59 +32,81 @@ public class TabManager extends Module implements Runnable {
     }
 
     public Module onEnable() {
-        get().getScheduler().runTaskTimer(get(), new TabManager(), 0L, 10L);
-        get().getScheduler().scheduleSyncRepeatingTask(get(), this, 0L, 20L);
+        TabList tabList = new TabList(this);
+
+        Anarchy.getScheduler().runTaskTimer(
+                Anarchy.getPlugin(),
+                tabList,
+                0L,
+                Config.TABUPDATEDELAY);
+
         return this;
     }
 
-    public void run() {
-        if (Bukkit.getOnlinePlayers().size() != 0) {
+    public static class TabList implements Runnable {
+        final TabManager tab;
 
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                StringBuilder header = new StringBuilder();
-                StringBuilder footer = new StringBuilder();
-                List<String> headerList, footerList;
-                if (Util.containsDomain(player, Messages.TAB1DOMAIN, "aussieanarchy.org")) {
-                    headerList = Messages.HEADER1.stream().map((str) -> this.parseText(player, str)).collect(Collectors.toList());
-                    footerList = Messages.FOOTER1.stream().map((str) -> this.parseText(player, str)).collect(Collectors.toList());
-                } else {
-                    headerList = Messages.HEADER.stream().map((str) -> this.parseText(player, str)).collect(Collectors.toList());
-                    footerList = Messages.FOOTER.stream().map((str) -> this.parseText(player, str)).collect(Collectors.toList());
+        public TabList(TabManager tab) {
+            this.tab = tab;
+        }
+
+        public void run() {
+            try {
+                if (Bukkit.getOnlinePlayers().size() == 0) {
+                    return;
                 }
 
-                int i;
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    StringBuilder header = new StringBuilder();
+                    StringBuilder footer = new StringBuilder();
 
-                for (i = 0; i < headerList.size(); ++i) {
-                    header.append(headerList.get(i)).append(i == footerList.size() - 1 ? "" : "\n");
+                    List<String> headerList = Messages.TAB_HEADER.stream().map((str) -> tab.parseText(player, str)).collect(Collectors.toList());
+                    List<String> footerList = Messages.TAB_FOOTER.stream().map((str) -> tab.parseText(player, str)).collect(Collectors.toList());
+
+                    for (int i = 0; i < headerList.size(); ++i) {
+                        header.append(headerList.get(i)).append(i == footerList.size() - 1 ? "" : "\n");
+                    }
+
+                    for (int i = 0; i < footerList.size(); ++i) {
+                        footer.append(footerList.get(i)).append(i == footerList.size() - 1 ? "" : "\n");
+                    }
+
+                    player.setPlayerListHeaderFooter(new ComponentBuilder(header.toString()).create(), new ComponentBuilder(footer.toString()).create());
                 }
-
-                for (i = 0; i < footerList.size(); ++i) {
-                    footer.append(footerList.get(i)).append(i == footerList.size() - 1 ? "" : "\n");
-                }
-
-                player.setPlayerListHeaderFooter((new ComponentBuilder(header.toString())).create(), (new ComponentBuilder(footer.toString())).create());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
         }
     }
 
     private String parseText(Player player, String text) {
         String newText = text;
-        if (get().getHookManager().getHook(PlaceholderHook.class).isPapiEnabled()) {
+
+        if (Anarchy.getHookManager().getHook(PlaceholderHook.class).isPapiEnabled()) {
             newText = PlaceholderAPI.setPlaceholders(player, text);
         }
 
         newText = ChatColor.translateAlternateColorCodes('&', newText);
-        newText = newText.replaceAll("%tps%", this.getTps().toLegacyText()).replaceAll("%ping%", this.formattedPing(player, false)).replaceAll("%uptime%", this.getFormattedInterval(System.currentTimeMillis() - get().getStartMillis())).replaceAll("%players%", Integer.toString(this.getPlayerCount()));
+        newText = newText
+                .replaceAll("%tps%", this.getTps().toLegacyText())
+                .replaceAll("%ping%", this.formattedPing(player, Config.TABCOLORPING))
+                .replaceAll("%uptime%", this.getFormattedInterval(System.currentTimeMillis() - Anarchy.getStartMillis()))
+                .replaceAll("%players%", Integer.toString(this.getPlayerCount()));
+
         return newText;
     }
 
     private TextComponent formatTps(double tps) {
-        net.md_5.bungee.api.ChatColor color = tps > 16.0D ? net.md_5.bungee.api.ChatColor.GREEN : (tps > 10.0D ? net.md_5.bungee.api.ChatColor.YELLOW : net.md_5.bungee.api.ChatColor.RED);
+        net.md_5.bungee.api.ChatColor color = tps > 16.0D
+                ? net.md_5.bungee.api.ChatColor.GREEN : (tps > 10.0D
+                ? net.md_5.bungee.api.ChatColor.YELLOW : net.md_5.bungee.api.ChatColor.RED);
+
         double roundedTps = Math.min((double)Math.round(tps * 100.0D) / 100.0D, 20.0D);
+
         String tpsString = (tps > 19.95D ? "*" : "") + (roundedTps > 19.8D ? 20.0D : roundedTps);
         TextComponent text = new TextComponent(tpsString);
         text.setColor(color);
+
         return text;
     }
 
@@ -115,7 +138,7 @@ public class TabManager extends Module implements Runnable {
     }
 
     private TextComponent getTps() {
-        return this.formatTps(Anarchy.getPlugin().getHookManager().getHook(SparkHook.class).getTPS_10SEC());
+        return this.formatTps(Anarchy.getHookManager().getHook(SparkHook.class).getTPS_10SEC());
     }
 
     private String getFormattedInterval(long ms) {
@@ -127,43 +150,31 @@ public class TabManager extends Module implements Runnable {
     }
 
     private String formattedPing(Player p, boolean color) {
-        return color ? (this.ping(p) < 300.0D ? net.md_5.bungee.api.ChatColor.GREEN : (this.ping(p) > 800.0D ? net.md_5.bungee.api.ChatColor.RED : net.md_5.bungee.api.ChatColor.GOLD)) + "" + this.format(this.ping(p), 2) : this.format(this.ping(p), 2);
+        double ping = this.ping(p);
+
+        if (ping >= 1000) {
+            double seconds = ping / 1000.0D;
+            return (color ? ChatColor.RED + "" : "") + format(seconds) + "s";
+        }
+
+        return (color ? (ping < 300.0D ? net.md_5.bungee.api.ChatColor.GREEN : (ping > 800.0D ? net.md_5.bungee.api.ChatColor.RED : net.md_5.bungee.api.ChatColor.GOLD)) + "" + this.format(ping) : this.format(ping)) + "ms";
     }
 
     private double ping(Player player) {
         if (!CompatUtil.is1_13()) {
             try {
                 Object entityPlayer = player.getClass().getMethod("getHandle").invoke(player);
-                Integer ping = (Integer)entityPlayer.getClass().getField("ping").get(entityPlayer);
+                Integer ping = (Integer) entityPlayer.getClass().getField("ping").get(entityPlayer);
                 return ping.doubleValue();
             } catch (IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException | NoSuchFieldException | IllegalAccessException var4) {
                 return -1.0D;
             }
         } else {
-            return (double)player.getPing();
+            return player.getPing();
         }
     }
 
-    private String format(double i, int p) {
-        String form = "#";
-        if (p > 0) {
-            form = form + "." + this.repeat("#", p);
-        }
-
-        return (new DecimalFormat(form)).format(i);
-    }
-
-    private String repeat(String s, int n) {
-        if (s == null) {
-            return null;
-        } else {
-            StringBuilder sb = new StringBuilder();
-
-            for(int i = 0; i < n; ++i) {
-                sb.append(s);
-            }
-
-            return sb.toString();
-        }
+    private String format(double i) {
+        return (new DecimalFormat("#.#")).format(i);
     }
 }

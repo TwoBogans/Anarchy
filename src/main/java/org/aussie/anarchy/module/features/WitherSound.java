@@ -27,7 +27,7 @@ public class WitherSound extends Module {
 
     @Override
     public Module onEnable() {
-        get().getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(get(), ListenerPriority.HIGHEST, PacketType.Play.Server.WORLD_EVENT) {
+        Anarchy.getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.HIGHEST, PacketType.Play.Server.WORLD_EVENT) {
             public void onPacketSending(PacketEvent event) {
                 PacketContainer packet = event.getPacket();
                 if (packet.getIntegers().read(0) == 1023) {
@@ -43,7 +43,8 @@ public class WitherSound extends Module {
     private void on(EntityExplodeEvent e) {
         if (e.getEntityType() == EntityType.WITHER) {
             for (Player p : Anarchy.getPlugin().getServer().getOnlinePlayers()) {
-                if (e.getLocation().getWorld().equals(p.getWorld()) && e.getEntity().getLocation().distance(p.getLocation()) <= (double) (Bukkit.getViewDistance() * 16 - 2)) {
+                if (!e.getLocation().getWorld().equals(p.getWorld())) continue;
+                if (e.getEntity().getLocation().distance(p.getLocation()) <= (double) (Bukkit.getViewDistance() * 16 - 2)) {
                     p.playSound(p.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1.0F, 1.0F);
                 }
             }

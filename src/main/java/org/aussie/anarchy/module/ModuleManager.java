@@ -1,11 +1,13 @@
 package org.aussie.anarchy.module;
 
+import lombok.Getter;
 import org.aussie.anarchy.Anarchy;
 import org.aussie.anarchy.module.features.*;
 import org.aussie.anarchy.module.patches.*;
 import org.aussie.anarchy.module.seasonal.Anniversary;
 import org.aussie.anarchy.module.seasonal.Halloween;
 import org.bukkit.ChatColor;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ModuleManager {
+    @Getter
     private final List<Module> modules = new ArrayList<>();
 
     public ModuleManager(Anarchy plugin) {
@@ -21,7 +24,7 @@ public class ModuleManager {
                 // Features
                 new AntiSpam(),
                 new Miscellaneous(),
-//                new NetherCactusDupe(),
+                new NetherCactusDupe(),
                 new NoGlobalThunder(),
                 new RandomMOTD(),
                 new RandomSpawn(),
@@ -35,12 +38,15 @@ public class ModuleManager {
                 new AntiBoatFly(),
                 new AntiBurrow(),
                 new AntiChunkBan(),
+                new AntiCoordExploit(),
                 new AntiDupe(),
                 new AntiElytra(),
                 new AntiExploits(),
                 new AntiGodMode(),
+                new AntiIllegals(),
                 new AntiInstantMine(),
                 new AntiLag(),
+                new AntiNetherRoof(),
                 new AntiLiquidLag(),
                 new AntiNoCom(),
                 new AntiPacketFly(),
@@ -65,8 +71,8 @@ public class ModuleManager {
         this.modules.addAll(Arrays.asList(modules));
     }
 
-    public Module getModuleByClass(Class<?> clazz) {
-        Iterator<Module> var2 = this.modules.iterator();
+    public static Module getModuleByClass(Class<?> clazz) {
+        Iterator<Module> var2 = Anarchy.getModuleManager().modules.iterator();
 
         Module module;
         do {
@@ -80,7 +86,4 @@ public class ModuleManager {
         return module;
     }
 
-    public List<Module> getModules() {
-        return this.modules;
-    }
 }

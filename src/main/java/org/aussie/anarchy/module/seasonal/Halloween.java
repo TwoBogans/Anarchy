@@ -29,8 +29,7 @@ public class Halloween extends Module {
 
     @Override
     public boolean isEnabled() {
-        DateTime now = DateTime.now(DateTimeZone.forID("Australia/Sydney"));
-        return now.getMonthOfYear() == 10;
+        return getTime().getMonthOfYear() == 10;
     }
 
     public Module onEnable() {
@@ -87,6 +86,7 @@ public class Halloween extends Module {
         if (event.getEntity() instanceof LivingEntity) {
             LivingEntity e = (LivingEntity)event.getEntity();
             EntityEquipment ee = e.getEquipment();
+            if (ee == null) return;
             ee.setHelmet(new ItemStack(Material.PUMPKIN));
             if (e.getType() == EntityType.HORSE && e.getType() != EntityType.ZOMBIE_HORSE && e.getType() != EntityType.SKELETON_HORSE) {
                 event.setCancelled(true);

@@ -20,7 +20,26 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CommandManager implements Listener {
     public CommandManager(Anarchy plugin) {
         plugin.registerListener(this);
-        this.registerCommands(new Creative(), new Spectator(), new Survival(), new ConfigCmd(), new EnderChest(), new InvSee(), new KickAll(), new MotdAdd(), new Queue(), new Restart(), new ServerSay(), new SudoAll(), new Help(), new Jihad(), new Playtime(), new Stats(), new Suicide(), new TogConMsgs(), new Veteran());
+        this.registerCommands(
+                new Creative(),
+                new Spectator(),
+                new Survival(),
+                new ConfigCmd(),
+                new EnderChest(),
+                new InvSee(),
+                new KickAll(),
+                new MotdAdd(),
+                new Queue(),
+//                new Restart(),
+                new ServerSay(),
+                new SudoAll(),
+                new Help(),
+                new Jihad(),
+                new Playtime(),
+                new Stats(),
+                new Suicide(),
+                new TogConMsgs(),
+                new Veteran());
     }
 
     private void registerCommands(Command... commands) {

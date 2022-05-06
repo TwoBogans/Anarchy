@@ -5,6 +5,7 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
+import org.aussie.anarchy.Anarchy;
 import org.aussie.anarchy.hook.hooks.ProtocolLibHook;
 import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.compat.CompatUtil;
@@ -23,7 +24,7 @@ public class NoGlobalThunder extends Module {
 
     @Override
     public Module onEnable() {
-        get().getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(get(), ListenerPriority.HIGHEST, PacketType.Play.Server.NAMED_SOUND_EFFECT) {
+        Anarchy.getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.HIGHEST, PacketType.Play.Server.NAMED_SOUND_EFFECT) {
             public void onPacketSending(PacketEvent e) {
                 if (e.getPacketType() == PacketType.Play.Server.NAMED_SOUND_EFFECT) {
                     PacketContainer packet = e.getPacket();

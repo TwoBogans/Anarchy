@@ -1,5 +1,6 @@
 package org.aussie.anarchy.module.features;
 
+import org.aussie.anarchy.Anarchy;
 import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.Util;
 import org.bukkit.entity.Player;
@@ -59,13 +60,11 @@ public class AntiSpam extends Module {
         if (this.bypass(player)) {
             if (this.cooldown.contains(player)) {
                 e.setCancelled(true);
-                get().getScheduler().scheduleSyncRepeatingTask(get(), () -> {
-                    this.cooldown.remove(player);
-                }, 0L, 20L);
+                Anarchy.getScheduler().scheduleSyncRepeatingTask(Anarchy.getPlugin(), () -> this.cooldown.remove(player), 0L, 20L);
                 this.log("&cReason: cooldown. Player: " + player.getName() + " Message: " + message);
             }
 
-            if (this.messages.containsKey(player) && message.equalsIgnoreCase((String)this.messages.get(player))) {
+            if (this.messages.containsKey(player) && message.equalsIgnoreCase(this.messages.get(player))) {
                 e.setCancelled(true);
                 this.log("&cReason: duplicate. Player: " + player.getName() + " Message: " + message);
             }

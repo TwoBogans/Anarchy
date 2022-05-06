@@ -6,6 +6,7 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import org.apache.commons.lang.WordUtils;
+import org.aussie.anarchy.Anarchy;
 import org.aussie.anarchy.hook.hooks.ProtocolLibHook;
 import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.config.Motds;
@@ -32,17 +33,20 @@ public class RandomMOTD extends Module {
     }
 
     public Module onEnable() {
-        get().getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(get(), ListenerPriority.HIGHEST, PacketType.Handshake.Client.SET_PROTOCOL) {
+        Anarchy.getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.HIGHEST, PacketType.Handshake.Client.SET_PROTOCOL) {
             @Override
             public void onPacketReceiving(PacketEvent event) {
                 PacketContainer packet = event.getPacket();
 
                 final WrapperHandshakingClientSetProtocol wrappedPacket = new WrapperHandshakingClientSetProtocol(packet);
+                final String domain = wrappedPacket.getServerAddressHostnameOrIp().toLowerCase();
 
-                if(wrappedPacket.getServerAddressHostnameOrIp().toLowerCase().contains("aussie")) {
-                    domainMap.put(Objects.requireNonNull(event.getPlayer().getAddress()).getAddress().toString(), true);
+                System.out.printf("[DEBUG] [RandomMOTD] Domain: %s", domain);
+
+                if(domain.contains("aussie")) {
+                    domainMap.put(domain, true);
                 } else {
-                    domainMap.put(Objects.requireNonNull(event.getPlayer().getAddress()).getAddress().toString(), false);
+                    domainMap.put(domain, false);
                 }
             }
         });
@@ -51,33 +55,24 @@ public class RandomMOTD extends Module {
 
     @EventHandler(priority = EventPriority.HIGH)
     private void on(ServerListPingEvent event) {
-        event.setMotd(this.getFormattedMotd());
-
-        try {
-            String name = domainMap.get(event.getAddress().toString()) ? "aussieanarchy" : "2b2tau";
-            File file = new File(get().getDataFolder(), "icons/" + name + ".png");
-
-            event.setServerIcon(Bukkit.loadServerIcon(file));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        event.setMotd(getFormattedMotd());
     }
 
-    private String getRandomMotd() {
-        return Motds.MOTDS.get(this.random.nextInt(Motds.MOTDS.size())).replaceAll("%name%", this.getRandomName());
+    public static String getRandomMotd() {
+        return Motds.MOTDS.get(random.nextInt(Motds.MOTDS.size())).replaceAll("%name%", getRandomName());
     }
 
-    private String getRandomName() {
-        return Motds.NAMES.get(this.random.nextInt(Motds.NAMES.size()));
+    public static String getRandomName() {
+        return Motds.NAMES.get(random.nextInt(Motds.NAMES.size()));
     }
 
-    private String getFormattedMotd() {
-        String[] split = this.wrap(this.getRandomMotd());
+    public static String getFormattedMotd() {
+        String[] split = wrap(getRandomMotd());
         String motd = split.length == 1 ? Motds.PREFIX + split[0] + "\n" + Motds.PREFIX : (split.length >= 2 ? Motds.PREFIX + split[0] + "\n" + Motds.SUFFIX + split[1] : Motds.PREFIX + "\n" + Motds.SUFFIX);
         return ChatColor.translateAlternateColorCodes('&', motd);
     }
 
-    private String[] wrap(String str) {
+    public static String[] wrap(String str) {
         return WordUtils.wrap(str, Motds.WRAP, null, true).split("\n");
     }
 }

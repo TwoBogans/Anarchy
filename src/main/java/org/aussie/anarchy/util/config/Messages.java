@@ -22,15 +22,14 @@ public final class Messages {
     public static List<String> QUEUE_MESSAGE;
     public static List<String> PLAYTIME_OFFLINE;
     public static List<String> PLAYTIME_ONLINE;
-    public static List<String> HEADER;
-    public static List<String> FOOTER;
-    public static List<String> HEADER1;
-    public static List<String> FOOTER1;
+    public static List<String> TAB_HEADER;
+    public static List<String> TAB_FOOTER;
     public static List<String> WORLDSTATS;
     public static List<String> VETERAN_TRUE;
     public static List<String> VETERAN_FALSE;
     public static List<String> CONFIG_HELP;
     public static List<String> CONFIG_RELOADED;
+    public static List<String> WHITELISTED_UNICODE;
 
     private Messages() {
     }

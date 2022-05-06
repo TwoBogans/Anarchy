@@ -4,10 +4,12 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.wrappers.EnumWrappers;
 import org.aussie.anarchy.Anarchy;
 import org.aussie.anarchy.hook.hooks.ProtocolLibHook;
 import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.config.Config;
+import org.aussie.anarchy.util.packet.wrappers.WrapperPlayClientEntityAction;
 import org.aussie.anarchy.util.packet.wrappers.WrapperPlayClientVehicleMove;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -34,32 +36,46 @@ public class AntiDupe extends Module {
 
     @Override
     public Module onEnable() {
-        Anarchy.getPlugin().getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.HIGH, PacketType.Play.Client.VEHICLE_MOVE) {
+        Anarchy.getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.HIGH, PacketType.Play.Client.VEHICLE_MOVE) {
             public void onPacketReceiving(PacketEvent e) {
                 WrapperPlayClientVehicleMove packet = new WrapperPlayClientVehicleMove(e.getPacket());
+
                 double x = packet.getX();
                 double y = packet.getY();
                 double z = packet.getZ();
                 float yaw = packet.getYaw();
                 float pitch = packet.getPitch();
+
                 Player player = e.getPlayer();
                 Location loc = new Location(player.getWorld(), x, y, z, yaw, pitch);
-                if (player.isInsideVehicle() && player.getVehicle() instanceof ChestedHorse) {
-                    ChestedHorse inventory = (ChestedHorse)player.getVehicle();
 
-                    if (!inventory.getChunk().isLoaded()) {
-                        inventory.getChunk().load();
-                    }
-
-                    if (inventory.isCarryingChest() && inventory.isInsideVehicle()) {
-                        inventory.eject();
-                        player.teleport(loc);
-                    }
-                }
+                check(player, loc);
             }
         });
 
-        Anarchy.getPlugin().getScheduler().scheduleSyncRepeatingTask(Anarchy.getPlugin(), () -> {
+        Anarchy.getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.HIGH, PacketType.Play.Client.USE_ENTITY) {
+            public void onPacketReceiving(PacketEvent e) {
+                WrapperPlayClientEntityAction packet = new WrapperPlayClientEntityAction(e.getPacket());
+                Location playerLocation = e.getPlayer().getLocation();
+
+                double x = playerLocation.getX();
+                double y = playerLocation.getY();
+                double z = playerLocation.getZ();
+                float yaw = playerLocation.getYaw();
+                float pitch = playerLocation.getPitch();
+
+                Player player = e.getPlayer();
+                Location loc = new Location(player.getWorld(), x, y, z, yaw, pitch);
+
+                if (packet.getAction() == EnumWrappers.PlayerAction.OPEN_INVENTORY) {
+                    check(player, loc);
+                }
+
+
+            }
+        });
+
+        Anarchy.getScheduler().scheduleSyncRepeatingTask(Anarchy.getPlugin(), () -> {
             for (UUID uuid : playerLocation.keySet()) {
                 Player player = Bukkit.getPlayer(uuid);
                 Entity entity = Bukkit.getEntity(playerEntity.get(uuid));
@@ -68,15 +84,12 @@ public class AntiDupe extends Module {
                     return;
                 }
 
-                if (entity.getChunk().getChunkKey() != playerLocation.get(uuid).toBlockLocation().getChunk().getChunkKey()) {
+                if (entity.getChunk().getChunkKey() != playerLocation.get(uuid).getChunk().getChunkKey()) {
                     if (player.isInsideVehicle() && player.getVehicle() instanceof ChestedHorse) {
                         ChestedHorse inventory = (ChestedHorse) player.getVehicle();
 
-                        if (!inventory.getChunk().isLoaded()) {
-                            inventory.getChunk().load();
-                        }
-
                         if (inventory.getEntityId() != entity.getEntityId()) {
+                            inventory.getInventory().clear();
                             player.closeInventory();
                             inventory.eject();
                         }
@@ -91,6 +104,18 @@ public class AntiDupe extends Module {
         return this;
     }
 
+    private void check(Player player, Location loc) {
+        if (player.isInsideVehicle() && player.getVehicle() instanceof ChestedHorse) {
+            ChestedHorse inventory = (ChestedHorse)player.getVehicle();
+
+            if (inventory.isCarryingChest() && inventory.isInsideVehicle()) {
+                inventory.getInventory().clear();
+                inventory.eject();
+                player.teleport(loc);
+            }
+        }
+    }
+
     @EventHandler
     private void on(InventoryCloseEvent e) {
         if (e.getInventory().getHolder() instanceof ChestedHorse) {
@@ -102,7 +127,7 @@ public class AntiDupe extends Module {
     @EventHandler
     private void on(InventoryOpenEvent e) {
         if (e.getInventory().getHolder() instanceof ChestedHorse) {
-            ChestedHorse inventory = (ChestedHorse)e.getInventory().getHolder();
+            ChestedHorse inventory = (ChestedHorse) e.getInventory().getHolder();
             playerLocation.put(e.getPlayer().getUniqueId(), inventory.getLocation());
             playerEntity.put(e.getPlayer().getUniqueId(), inventory.getUniqueId());
         }

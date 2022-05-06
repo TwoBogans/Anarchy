@@ -4,7 +4,7 @@ import org.aussie.anarchy.util.Util;
 import org.aussie.anarchy.util.compat.wrappers.CompatUtil1_12;
 import org.aussie.anarchy.util.compat.wrappers.CompatUtil1_13;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class CompatUtil {
@@ -25,10 +25,12 @@ public abstract class CompatUtil {
 
     public abstract boolean isBook(ItemStack var1);
 
-    public abstract boolean isLiquid(Material var1);
+    public abstract boolean isLiquid(Block var1);
+
+    public abstract boolean isNetherPortal(Block block);
 
     public static CompatUtil get() {
-        return (CompatUtil)(is1_12() ? new CompatUtil1_12() : new CompatUtil1_13());
+        return is1_12() ? new CompatUtil1_12() : new CompatUtil1_13();
     }
 
     static {

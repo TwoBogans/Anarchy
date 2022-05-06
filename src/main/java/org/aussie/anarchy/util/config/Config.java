@@ -3,8 +3,11 @@ package org.aussie.anarchy.util.config;
 import java.util.List;
 
 public final class Config {
+    public static boolean CACTUSPORTALDUPE;
+    public static boolean JIHADENABLED;
     public static boolean ANTINETHERROOF;
     public static boolean ANTIBURROW;
+    public static boolean ANTIILLEGALS;
     public static boolean ANTIINSTANTMINE;
     public static boolean ANTIBEDROCKHOLES;
     public static boolean ANTIBOATFLY;
@@ -15,6 +18,7 @@ public final class Config {
     public static boolean ANTIGODMODE;
     public static boolean ANTILAG;
     public static boolean ANTILIQUIDLAG;
+    public static boolean ANTICOORDEXPLOIT;
     public static boolean ANTINOCOM;
     public static boolean ANTIPACKETFLY;
     public static boolean ANTIPACKETFLYONLYSOLID;
@@ -22,7 +26,7 @@ public final class Config {
     public static boolean FREEZECHUNK;
     public static boolean ANTIWITHERLAG;
     public static boolean RANDOMSPAWNENABLED;
-    public static boolean TABENABLED;
+    public static boolean TABENABLED, TABCOLORPING;
     public static boolean NOGLOBALTHUNDER;
     public static boolean WITHERSOUND;
     public static boolean ANTICHUNKBAN;
@@ -50,6 +54,9 @@ public final class Config {
     public static int ANTILIQUIDLAGRADIUS;
     public static int RANDOMSPAWNRADIUSMIN;
     public static int RANDOMSPAWNRADIUSMAX;
+    public static int TABUPDATEDELAY;
+    public static int ANTICOORDEXPLOITMINDIST;
+    public static int ANTICOORDEXPLOITTIME;
     public static int ANTICHUNKBANMAX;
     public static int ANTICHUNKBANTIME;
     public static int WORLDSTATSTICKS;

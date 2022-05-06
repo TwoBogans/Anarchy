@@ -5,6 +5,7 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
+import org.aussie.anarchy.Anarchy;
 import org.aussie.anarchy.hook.hooks.ProtocolLibHook;
 import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.config.Config;
@@ -32,7 +33,7 @@ public class AntiLag extends Module {
 
     @Override
     public Module onEnable() {
-        get().getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(get(), ListenerPriority.HIGH, PacketType.Play.Server.SPAWN_ENTITY) {
+        Anarchy.getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.HIGH, PacketType.Play.Server.SPAWN_ENTITY) {
             public void onPacketSending(PacketEvent event) {
                 PacketContainer packet = event.getPacket();
                 WrapperPlayServerSpawnEntity wrapperPlayServerSpawnEntity = new WrapperPlayServerSpawnEntity(packet);
@@ -52,7 +53,7 @@ public class AntiLag extends Module {
 
             }
         });
-        ((ProtocolLibHook)get().getHookManager().getHook(ProtocolLibHook.class)).add(new PacketAdapter(get(), ListenerPriority.NORMAL, PacketType.Play.Client.AUTO_RECIPE) {
+        Anarchy.getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.NORMAL, PacketType.Play.Client.AUTO_RECIPE) {
             public void onPacketReceiving(PacketEvent event) {
                 if (event.getPacketType() == PacketType.Play.Client.AUTO_RECIPE) {
                     if (AntiLag.this.vl.contains(event.getPlayer().getUniqueId())) {

@@ -1,6 +1,8 @@
 package org.aussie.anarchy.module.features;
 
+import lombok.Getter;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.aussie.anarchy.Anarchy;
 import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.config.Config;
 import org.bukkit.Bukkit;
@@ -16,31 +18,33 @@ import java.util.Iterator;
 import java.util.Objects;
 
 public class WorldStats extends Module {
+
+    @Getter
     private static double size;
+    @Getter
     private static int offlinePlayers;
+    @Getter
     private static long age;
-    private static final Calendar calendar = Calendar.getInstance();
 
-    public WorldStats() {
-    }
+    private static final Calendar calender = Calendar.getInstance();
 
+    @Override
     public boolean isEnabled() {
         return true;
     }
 
+    @Override
     public Module onEnable() {
         if (Config.WORLDSTATSTIME == -1L) {
             Config.WORLDSTATSTIME = System.currentTimeMillis();
             Config.reload();
         }
 
-        get().getScheduler().runTaskTimer(get(), () -> {
-            (new Thread(() -> {
-                size = this.calculateSize();
-                offlinePlayers = Bukkit.getOfflinePlayers().length;
-                age = System.currentTimeMillis() - Config.WORLDSTATSTIME;
-            })).start();
-        }, 0L, (long)Config.WORLDSTATSTICKS);
+        Anarchy.getScheduler().runTaskTimer(Anarchy.getPlugin(), () -> (new Thread(() -> {
+            size = calculateSize();
+            offlinePlayers = Bukkit.getOfflinePlayers().length;
+            age = System.currentTimeMillis() - Config.WORLDSTATSTIME;
+        })).start(), 0L, Config.WORLDSTATSTICKS);
         return this;
     }
 
@@ -68,6 +72,7 @@ public class WorldStats extends Module {
         msg = msg.replace("%days%", String.valueOf(getDays()));
         msg = msg.replace("%size%", (new DecimalFormat("#.##")).format(getSize()));
         msg = msg.replace("%players%", String.valueOf(getOfflinePlayers()));
+
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             Player player = sender instanceof Player ? (Player)sender : null;
             msg = PlaceholderAPI.setPlaceholders(player, msg);
@@ -76,30 +81,19 @@ public class WorldStats extends Module {
         return ChatColor.translateAlternateColorCodes('&', msg);
     }
 
-    private static int getYears() {
-        calendar.setTimeInMillis(getAge());
-        return calendar.get(1) - 1970;
+    public static int getYears() {
+        calender.setTimeInMillis(getAge());
+        return calender.get(Calendar.YEAR) - 1970;
     }
 
-    private static int getMonths() {
-        calendar.setTimeInMillis(getAge());
-        return calendar.get(2);
+    public static int getMonths() {
+        calender.setTimeInMillis(getAge());
+        return calender.get(Calendar.MONTH);
     }
 
-    private static int getDays() {
-        calendar.setTimeInMillis(getAge());
-        return calendar.get(Calendar.DATE) - 1;
+    public static int getDays() {
+        calender.setTimeInMillis(getAge());
+        return calender.get(Calendar.DATE) - 1;
     }
 
-    public static double getSize() {
-        return size;
-    }
-
-    public static int getOfflinePlayers() {
-        return offlinePlayers;
-    }
-
-    public static long getAge() {
-        return age;
-    }
 }

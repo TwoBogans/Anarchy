@@ -17,7 +17,7 @@ public class WrapperPlayClientVehicleMove extends AbstractPacket {
     }
 
     public double getX() {
-        return (Double)this.handle.getDoubles().read(0);
+        return this.handle.getDoubles().read(0);
     }
 
     public void setX(double value) {

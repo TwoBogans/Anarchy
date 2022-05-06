@@ -1,5 +1,6 @@
 package org.aussie.anarchy;
 
+import lombok.Getter;
 import org.aussie.anarchy.command.CommandManager;
 import org.aussie.anarchy.hook.HookManager;
 import org.aussie.anarchy.hook.hooks.ProtocolLibHook;
@@ -13,15 +14,19 @@ import org.bukkit.scheduler.BukkitScheduler;
 // 
 public final class Anarchy extends JavaPlugin implements IAnarchy {
 
-    private static Anarchy plugin;
-    private Long startMillis;
-    private BukkitScheduler scheduler;
-    private CommandManager commandManager;
-    private ModuleManager moduleManager;
-    private HookManager hookManager;
+    @Getter
+    private static Long startMillis;
 
-    public Anarchy() {
-    }
+    @Getter
+    private static Anarchy plugin;
+    @Getter
+    private static BukkitScheduler scheduler;
+    @Getter
+    private static CommandManager commandManager;
+    @Getter
+    private static ModuleManager moduleManager;
+    @Getter
+    private static HookManager hookManager;
 
     public void onEnable() {
         this.log("                                _           ");
@@ -33,50 +38,27 @@ public final class Anarchy extends JavaPlugin implements IAnarchy {
         this.log("                                       __/ |");
         this.log("                                      |___/ ");
         plugin = this;
-        this.startMillis = System.currentTimeMillis();
-        this.scheduler = plugin.getServer().getScheduler();
+        startMillis = System.currentTimeMillis();
+        scheduler = plugin.getServer().getScheduler();
         this.processConfigs(this.getDataFolder());
         this.log(ChatColor.DARK_GREEN + "[Config] Loaded config");
         this.log(ChatColor.GOLD + "[Hooks] Loading hooks");
-        this.hookManager = new HookManager(this);
+        hookManager = new HookManager(this);
         this.log(ChatColor.GOLD + "[Commands] Loading commands");
-        this.commandManager = new CommandManager(this);
+        commandManager = new CommandManager(this);
         this.log(ChatColor.GOLD + "[Features] Loading patches/features");
-        this.moduleManager = new ModuleManager(this);
-        this.log(ChatColor.DARK_GREEN + "[Anarchy] Anarchy successfully enabled! (" + (System.currentTimeMillis() - this.startMillis) + "ms)");
+        moduleManager = new ModuleManager(this);
+        this.log(ChatColor.DARK_GREEN + "[Anarchy] Anarchy successfully enabled! (" + (System.currentTimeMillis() - startMillis) + "ms)");
     }
 
     public void onDisable() {
-        ((ProtocolLibHook) this.hookManager.getHook(ProtocolLibHook.class)).remove(plugin);
+        hookManager.getHook(ProtocolLibHook.class).remove(plugin);
     }
 
     public void registerListener(Listener listener) {
         plugin.getServer().getPluginManager().registerEvents(listener, plugin);
     }
 
-    public static Anarchy getPlugin() {
-        return plugin;
-    }
-
-    public Long getStartMillis() {
-        return this.startMillis;
-    }
-
-    public BukkitScheduler getScheduler() {
-        return this.scheduler;
-    }
-
-    public CommandManager getCommandManager() {
-        return this.commandManager;
-    }
-
-    public ModuleManager getModuleManager() {
-        return this.moduleManager;
-    }
-
-    public HookManager getHookManager() {
-        return this.hookManager;
-    }
 }
 
 

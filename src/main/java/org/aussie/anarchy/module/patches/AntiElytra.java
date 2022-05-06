@@ -2,6 +2,7 @@ package org.aussie.anarchy.module.patches;
 
 import org.aussie.anarchy.Anarchy;
 import org.aussie.anarchy.module.Module;
+import org.aussie.anarchy.util.Util;
 import org.aussie.anarchy.util.config.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -47,7 +48,7 @@ public class AntiElytra extends Module {
 
 
                             evt.setCancelled(true);
-//                            get().log(e.getName() + " prevented from using packet elytra fly at " + Util.formattedLocation(e.getLocation()));
+//                            log(e.getName() + " prevented from using packet elytra fly at " + Util.formattedLocation(e.getLocation()));
                         }
                     } else {
                         this.VL.merge(e, 1, Integer::sum);

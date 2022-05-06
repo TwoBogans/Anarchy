@@ -28,7 +28,7 @@ public class AntiBoatFly extends Module {
 
     @Override
     public Module onEnable() {
-        get().getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.HIGHEST, PacketType.Play.Client.USE_ENTITY) {
+        Anarchy.getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.HIGHEST, PacketType.Play.Client.USE_ENTITY) {
             public void onPacketReceiving(PacketEvent event) {
                 Player e = event.getPlayer();
                 Location l = e.getLocation();

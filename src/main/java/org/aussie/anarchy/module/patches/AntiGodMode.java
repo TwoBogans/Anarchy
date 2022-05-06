@@ -34,6 +34,7 @@ public class AntiGodMode extends Module {
     private void on(PlayerMoveEvent e) {
         Player p = e.getPlayer();
         Location from = e.getFrom();
+
         if (p.isInsideVehicle() && !Objects.requireNonNull(p.getVehicle()).isValid()) {
             p.getVehicle().eject();
             e.setTo(from);

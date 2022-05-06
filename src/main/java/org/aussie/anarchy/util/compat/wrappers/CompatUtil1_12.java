@@ -2,6 +2,7 @@ package org.aussie.anarchy.util.compat.wrappers;
 
 import org.aussie.anarchy.util.compat.CompatUtil;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 public class CompatUtil1_12 extends CompatUtil {
@@ -42,8 +43,8 @@ public class CompatUtil1_12 extends CompatUtil {
         }
     }
 
-    public boolean isLiquid(Material material) {
-        switch(material) {
+    public boolean isLiquid(Block block) {
+        switch(block.getType()) {
         case LEGACY_LAVA:
         case LEGACY_STATIONARY_LAVA:
         case LEGACY_WATER:
@@ -53,4 +54,10 @@ public class CompatUtil1_12 extends CompatUtil {
             return false;
         }
     }
+
+    @Override
+    public boolean isNetherPortal(Block block) {
+        return block.getType() == Material.getMaterial("PORTAL");
+    }
+
 }

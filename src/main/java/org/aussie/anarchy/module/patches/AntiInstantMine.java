@@ -28,7 +28,10 @@ public class AntiInstantMine extends Module {
     private void on(BlockBreakEvent e) {
         if (this.isEnabled() && this.checkMaterial(e.getBlock().getType())) {
             if (this.block.containsKey(e.getPlayer())) {
-                if (this.block.get(e.getPlayer()).getX() == e.getBlock().getX() && this.block.get(e.getPlayer()).getY() == e.getBlock().getY() && this.block.get(e.getPlayer()).getZ() == e.getBlock().getZ()) {
+                if (this.block.get(e.getPlayer()).getX() == e.getBlock().getX()
+                        && this.block.get(e.getPlayer()).getY() == e.getBlock().getY()
+                        && this.block.get(e.getPlayer()).getZ() == e.getBlock().getZ()
+                ) {
                     if (this.timer.containsKey(e.getPlayer())) {
                         if (System.currentTimeMillis() - this.timer.get(e.getPlayer()) < 5000L) {
                             e.setCancelled(true);
@@ -49,7 +52,6 @@ public class AntiInstantMine extends Module {
                 this.block.put(e.getPlayer(), e.getBlock());
             }
         }
-
     }
 
     private boolean checkMaterial(Material material) {

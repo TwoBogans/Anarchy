@@ -1,5 +1,6 @@
 package org.aussie.anarchy.module.features;
 
+import org.aussie.anarchy.Anarchy;
 import org.aussie.anarchy.hook.hooks.LuckPermsHook;
 import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.Util;
@@ -21,7 +22,7 @@ public class VeteranCheck extends Module {
     }
 
     public Module onEnable() {
-        luckPerms = get().getHookManager().getHook(LuckPermsHook.class);
+        luckPerms = Anarchy.getHookManager().getHook(LuckPermsHook.class);
         return this;
     }
 
@@ -39,9 +40,7 @@ public class VeteranCheck extends Module {
         UUID uuid = player.getUniqueId();
         if (!luckPerms.hasPermission(uuid, "group.veteran") || !isVeteran(player)) {
             if (!Bukkit.isPrimaryThread()) {
-                get().getScheduler().runTask(get(), () -> {
-                    Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "lp user " + uuid.toString() + " parent " + (isVeteran(player) ? "add" : "remove") + " veteran");
-                });
+                Anarchy.getScheduler().runTask(Anarchy.getPlugin(), () -> Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "lp user " + uuid + " parent " + (isVeteran(player) ? "add" : "remove") + " veteran"));
             }
 
         }

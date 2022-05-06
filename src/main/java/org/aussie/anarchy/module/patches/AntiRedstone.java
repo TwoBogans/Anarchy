@@ -5,8 +5,13 @@ import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.Util;
 import org.aussie.anarchy.util.config.Config;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Boat;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.Minecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockPistonExtendEvent;
@@ -29,7 +34,7 @@ public class AntiRedstone extends Module {
 
     @Override
     public Module onEnable() {
-        Anarchy.getPlugin().getScheduler().scheduleSyncRepeatingTask(Anarchy.getPlugin(), this.frozenChunks::clear, 0L, 300L);
+        Anarchy.getScheduler().scheduleSyncRepeatingTask(Anarchy.getPlugin(), this.frozenChunks::clear, 0L, 300L);
         return this;
     }
 
@@ -68,10 +73,17 @@ public class AntiRedstone extends Module {
         Chunk chunk = e.getBlock().getChunk();
         Material material = e.getBlock().getType();
 
+        Location loc = e.getBlock().getLocation();
+        Location up = loc.add(0, 1, 0);
+
+        up.getNearbyEntitiesByType(FallingBlock.class, 5).forEach(Entity::remove);
+        up.getNearbyEntitiesByType(Boat.class, 5).forEach(Entity::remove);
+        up.getNearbyEntitiesByType(Minecart.class, 5).forEach(Entity::remove);
+
         this.pistonMap.putIfAbsent(chunk, 0);
         this.pistonMap.computeIfPresent(chunk, (c, i) -> i++);
 
-        if ((this.checkChunk(chunk, material) || this.pistonMap.get(chunk) > Config.PISTONCHUNKMAX)  && Config.FREEZECHUNK) {
+        if ((this.checkChunk(chunk, material) || this.pistonMap.get(chunk) > Config.PISTONCHUNKMAX) && Config.FREEZECHUNK) {
             this.frozenChunks.add(chunk);
         }
 
@@ -119,7 +131,7 @@ public class AntiRedstone extends Module {
 
                 return Util.countChunk(chunk, material) >= maxLimit;
             } catch (Exception e) {
-                get().error("Exception: " + e.getMessage());
+                Anarchy.getPlugin().error("Exception: " + e.getMessage());
             }
         }
 

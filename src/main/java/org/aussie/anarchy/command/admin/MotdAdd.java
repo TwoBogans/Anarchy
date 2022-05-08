@@ -16,7 +16,7 @@ public class MotdAdd extends Command {
     }
 
     public boolean onCommand(@NotNull CommandSender sender, @NotNull org.bukkit.command.Command command, @NotNull String label, @NotNull String[] args) {
-        if (Util.isAdmin(sender) && args.length > 1) {
+        if (Util.isAdmin(sender) && args.length >= 1) {
             String motd = ChatColor.translateAlternateColorCodes('&', String.join(" ", Arrays.asList(args).subList(1, args.length))).replaceAll("\\s+$", "");
             List<String> list = Motds.MOTDS;
             if (list.contains(motd)) {

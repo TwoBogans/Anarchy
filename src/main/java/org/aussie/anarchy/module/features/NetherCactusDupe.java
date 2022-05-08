@@ -32,7 +32,7 @@ public class NetherCactusDupe extends Module {
             // Check Donkey is on Half a Heart
             if (inventory.getHealth() <= 1) {
                 World world = inventory.getWorld();
-                
+
                 world.spawnEntity(inventory.getLocation(), inventory.getType(), inventory.getEntitySpawnReason(), entity -> {
                     ChestedHorse clone = (ChestedHorse) entity;
                     ItemStack[] items = inventory.getInventory().getContents();

@@ -23,6 +23,7 @@ public final class Config {
     public static boolean ANTIPACKETFLY;
     public static boolean ANTIPACKETFLYONLYSOLID;
     public static boolean ANTIREDSTONE;
+    public static boolean CLEARSHULKERDATA;
     public static boolean FREEZECHUNK;
     public static boolean ANTIWITHERLAG;
     public static boolean RANDOMSPAWNENABLED;

@@ -43,6 +43,17 @@ public class CompatUtil1_13 extends CompatUtil {
         }
     }
 
+    @Override
+    public boolean isHead(ItemStack item) {
+        switch(item.getType()) {
+            case PLAYER_HEAD:
+            case PLAYER_WALL_HEAD:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     public boolean isLiquid(Block block) {
         switch(block.getType()) {
         case LAVA:

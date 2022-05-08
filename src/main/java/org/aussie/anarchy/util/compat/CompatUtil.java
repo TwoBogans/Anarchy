@@ -25,6 +25,8 @@ public abstract class CompatUtil {
 
     public abstract boolean isBook(ItemStack var1);
 
+    public abstract boolean isHead(ItemStack var1);
+
     public abstract boolean isLiquid(Block var1);
 
     public abstract boolean isNetherPortal(Block block);

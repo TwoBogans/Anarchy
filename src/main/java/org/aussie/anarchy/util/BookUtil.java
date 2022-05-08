@@ -22,29 +22,33 @@ public class BookUtil implements Listener {
         ItemStack[] var1 = player.getInventory().getContents();
 
         for (ItemStack item : var1) {
-            if (item != null) {
-                if (CompatUtil.get().isBook(item)) {
-                    stripPages(item);
-                }
-
-                if (CompatUtil.get().isShulker(item)) {
-                    BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
-                    ShulkerBox box = (ShulkerBox) meta.getBlockState();
-                    ItemStack[] var7 = box.getInventory().getContents();
-
-                    for (ItemStack i : var7) {
-                        if (i != null && CompatUtil.get().isBook(i)) {
-                            stripPages(i);
-                        }
-                    }
-
-                    box.update();
-                    meta.setBlockState(box);
-                    item.setItemMeta(meta);
-                }
-            }
+            clearBook(item);
         }
 
+    }
+
+    public static void clearBook(ItemStack item) {
+        if (item != null) {
+            if (CompatUtil.get().isBook(item)) {
+                stripPages(item);
+            }
+
+            if (CompatUtil.get().isShulker(item)) {
+                BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
+                ShulkerBox box = (ShulkerBox) meta.getBlockState();
+                ItemStack[] var7 = box.getInventory().getContents();
+
+                for (ItemStack i : var7) {
+                    if (i != null && CompatUtil.get().isBook(i)) {
+                        stripPages(i);
+                    }
+                }
+
+                box.update();
+                meta.setBlockState(box);
+                item.setItemMeta(meta);
+            }
+        }
     }
 
     private static void stripPages(ItemStack book) {

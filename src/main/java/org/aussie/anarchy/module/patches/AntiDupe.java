@@ -11,6 +11,7 @@ import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.config.Config;
 import org.aussie.anarchy.util.packet.wrappers.WrapperPlayClientEntityAction;
 import org.aussie.anarchy.util.packet.wrappers.WrapperPlayClientVehicleMove;
+import org.aussie.anarchy.util.packet.wrappers.WrapperPlayServerSetSlot;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.ChestedHorse;
@@ -88,10 +89,18 @@ public class AntiDupe extends Module {
                     if (player.isInsideVehicle() && player.getVehicle() instanceof ChestedHorse) {
                         ChestedHorse inventory = (ChestedHorse) player.getVehicle();
 
+                        Location playerLocation = player.getLocation();
+
+                        double x = playerLocation.getX();
+                        double y = playerLocation.getY();
+                        double z = playerLocation.getZ();
+                        float yaw = playerLocation.getYaw();
+                        float pitch = playerLocation.getPitch();
+
+                        Location loc = new Location(player.getWorld(), x, y, z, yaw, pitch);
+
                         if (inventory.getEntityId() != entity.getEntityId()) {
-                            inventory.getInventory().clear();
-                            player.closeInventory();
-                            inventory.eject();
+                            check(player, loc);
                         }
                     } else {
                         player.closeInventory();

@@ -43,6 +43,17 @@ public class CompatUtil1_12 extends CompatUtil {
         }
     }
 
+    @Override
+    public boolean isHead(ItemStack item) {
+        switch(item.getType()) {
+            case LEGACY_SKULL:
+            case LEGACY_SKULL_ITEM:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     public boolean isLiquid(Block block) {
         switch(block.getType()) {
         case LEGACY_LAVA:

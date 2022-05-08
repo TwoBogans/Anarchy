@@ -8,10 +8,16 @@ import com.comphenix.protocol.events.PacketEvent;
 import org.aussie.anarchy.Anarchy;
 import org.aussie.anarchy.hook.hooks.ProtocolLibHook;
 import org.aussie.anarchy.module.Module;
+import org.aussie.anarchy.util.BookUtil;
+import org.aussie.anarchy.util.Util;
+import org.aussie.anarchy.util.compat.CompatUtil;
 import org.aussie.anarchy.util.config.Config;
+import org.aussie.anarchy.util.packet.wrappers.WrapperPlayServerSetSlot;
 import org.aussie.anarchy.util.packet.wrappers.WrapperPlayServerSpawnEntity;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Material;
+import org.bukkit.block.ShulkerBox;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
@@ -19,6 +25,8 @@ import org.bukkit.entity.Vehicle;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.vehicle.VehicleCreateEvent;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BlockStateMeta;
 
 import java.util.HashSet;
 import java.util.UUID;
@@ -33,12 +41,43 @@ public class AntiLag extends Module {
 
     @Override
     public Module onEnable() {
+        Anarchy.getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.HIGH, PacketType.Play.Server.SET_SLOT) {
+            @Override
+            public void onPacketSending(PacketEvent event) {
+                if (Config.CLEARSHULKERDATA) {
+                    WrapperPlayServerSetSlot packet = new WrapperPlayServerSetSlot(event.getPacket());
+
+                    // TODO Could add more conditions tps/chest opens
+                    if (packet.getWindowId() != 0) {
+                        try {
+                            ItemStack item = packet.getSlotData().clone();
+                            BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
+                            ShulkerBox shulker = (ShulkerBox) meta.getBlockState();
+
+                            shulker.getInventory().clear();
+                            shulker.update();
+
+                            meta.setBlockState(shulker);
+                            item.setItemMeta(meta);
+
+                            packet.setSlotData(item);
+                            event.setPacket(packet.getHandle());
+                        } catch (Exception ignored) {
+                            // Not shulker
+                        }
+                    }
+                }
+            }
+        });
+
         Anarchy.getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.HIGH, PacketType.Play.Server.SPAWN_ENTITY) {
             public void onPacketSending(PacketEvent event) {
-                PacketContainer packet = event.getPacket();
-                WrapperPlayServerSpawnEntity wrapperPlayServerSpawnEntity = new WrapperPlayServerSpawnEntity(packet);
-                Entity e = wrapperPlayServerSpawnEntity.getEntity(event.getPlayer().getWorld());
+                WrapperPlayServerSpawnEntity packet = new WrapperPlayServerSpawnEntity(event.getPacket());
+
+                Entity e = packet.getEntity(event.getPlayer().getWorld());
+
                 int count = 0;
+
                 Entity[] var6 = e.getChunk().getEntities();
 
                 for (Entity ce : var6) {

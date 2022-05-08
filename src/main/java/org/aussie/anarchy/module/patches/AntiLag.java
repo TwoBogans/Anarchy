@@ -44,7 +44,7 @@ public class AntiLag extends Module {
         Anarchy.getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.HIGH, PacketType.Play.Server.SET_SLOT) {
             @Override
             public void onPacketSending(PacketEvent event) {
-                if (Config.CLEARSHULKERDATA) {
+                if (Config.CLEARSHULKERDATA && !Util.isAdmin(event.getPlayer())) {
                     WrapperPlayServerSetSlot packet = new WrapperPlayServerSetSlot(event.getPacket());
 
                     // TODO Could add more conditions tps/chest opens

@@ -118,6 +118,7 @@ public class AntiDupe extends Module {
             ChestedHorse inventory = (ChestedHorse)player.getVehicle();
 
             if (inventory.isCarryingChest() && inventory.isInsideVehicle()) {
+                player.getWorld().loadChunk(inventory.getChunk());
                 inventory.getInventory().clear();
                 inventory.eject();
                 player.teleport(loc);

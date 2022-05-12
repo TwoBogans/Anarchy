@@ -38,8 +38,10 @@ public class AntiBoatFly extends Module {
 //                        if (!(vehicle instanceof Boat)) return;
                         if (AntiBoatFly.this.vl.get(e.getUniqueId()) != null) {
                             if (AntiBoatFly.this.vl.get(e.getUniqueId()) > Config.MAXBOATFLYVL) {
+                                if (AntiBoatFly.this.vl.get(e.getUniqueId()) > (Config.MAXBOATFLYVL * 2)) {
+                                    vehicle.remove();
+                                }
                                 vehicle.eject();
-//                                vehicle.remove();
                             } else {
                                 AntiBoatFly.this.vl.merge(e.getUniqueId(), 1, Integer::sum);
                                 Bukkit.getServer().getScheduler().runTaskLater(this.plugin, () -> AntiBoatFly.this.vl.put(e.getUniqueId(), AntiBoatFly.this.vl.get(e.getUniqueId()) - 1), 200L);

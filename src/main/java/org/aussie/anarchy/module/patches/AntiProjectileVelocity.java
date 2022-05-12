@@ -26,7 +26,11 @@ public class AntiProjectileVelocity extends Module {
         if (this.isEnabled()) {
             Entity arrow = e.getProjectile();
             Vector v = arrow.getVelocity();
-            arrow.setVelocity(v.setX(Util.clamp(v.getX(), -3.0D, 3.0D)).setY(Util.clamp(v.getY(), -3.0D, 3.0D)).setZ(Util.clamp(v.getZ(), -3.0D, 3.0D)));
+
+            arrow.setVelocity(v
+                    .setX(Util.clamp(v.getX(), -3.0D, 3.0D))
+                    .setY(Util.clamp(v.getY(), -3.0D, 3.0D))
+                    .setZ(Util.clamp(v.getZ(), -3.0D, 3.0D)));
         }
     }
 
@@ -35,12 +39,19 @@ public class AntiProjectileVelocity extends Module {
         if (this.isEnabled()) {
             Entity entity = e.getEntity();
             Vector v = entity.getVelocity();
+
             if (entity instanceof EnderPearl || entity instanceof Snowball || entity instanceof Egg) {
-                entity.setVelocity(v.setX(Util.clamp(v.getX(), -1.5D, 1.5D)).setY(Util.clamp(v.getY(), -1.5D, 1.5D)).setZ(Util.clamp(v.getZ(), -1.5D, 1.5D)));
+                entity.setVelocity(v
+                        .setX(Util.clamp(v.getX(), -1.5D, 1.5D))
+                        .setY(Util.clamp(v.getY(), -1.5D, 1.5D))
+                        .setZ(Util.clamp(v.getZ(), -1.5D, 1.5D)));
             }
 
             if (entity instanceof SplashPotion || entity instanceof LingeringPotion) {
-                entity.setVelocity(v.setX(Util.clamp(v.getX(), -0.5D, 0.5D)).setY(Util.clamp(v.getY(), -0.5D, 0.5D)).setZ(Util.clamp(v.getZ(), -0.5D, 0.5D)));
+                entity.setVelocity(v
+                        .setX(Util.clamp(v.getX(), -0.5D, 0.5D))
+                        .setY(Util.clamp(v.getY(), -0.5D, 0.5D))
+                        .setZ(Util.clamp(v.getZ(), -0.5D, 0.5D)));
             }
 
         }

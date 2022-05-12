@@ -12,6 +12,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -26,8 +27,7 @@ public class AntiChunkBan extends Module {
 
     @Override
     public Module onEnable() {
-        Anarchy.getScheduler().runTaskTimerAsynchronously(Anarchy.getPlugin(), () -> {
-
+        Anarchy.getScheduler().runTaskTimer(Anarchy.getPlugin(), () -> {
             for (Map.Entry<Block, Long> blockLongEntry : BLOCKS.entrySet()) {
                 Block block = blockLongEntry.getKey();
                 if (block.getType() == Material.AIR) {
@@ -42,7 +42,7 @@ public class AntiChunkBan extends Module {
                 }
             }
 
-        }, 1L, 5L);
+        }, 0L, 5L);
         return this;
     }
 
@@ -52,7 +52,21 @@ public class AntiChunkBan extends Module {
         Chunk chunk = block.getChunk();
 
         if (Config.ANTICHUNKBANBLOCKS.contains(block.getType().toString()) && Util.countChunk(chunk, block.getType()) > Config.ANTICHUNKBANMAX) {
-            BLOCKS.put(block, System.currentTimeMillis());
+            BukkitTask task = Anarchy.getScheduler().runTask(Anarchy.getPlugin(), () -> {
+                for(int x = 0; x < 16; ++x) {
+                    for(int z = 0; z < 16; ++z) {
+                        for(int y = 0; y < 256; ++y) {
+                            Block b = chunk.getBlock(x, y, z);
+                            if (b.getType().equals(block.getType())) {
+                                if (!BLOCKS.containsKey(b)) {
+                                    BLOCKS.put(b, System.currentTimeMillis());
+                                }
+//                                b.setType(Material.AIR);
+                            }
+                        }
+                    }
+                }
+            });
         }
 
     }

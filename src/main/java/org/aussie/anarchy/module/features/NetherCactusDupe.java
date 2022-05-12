@@ -1,5 +1,6 @@
 package org.aussie.anarchy.module.features;
 
+import org.aussie.anarchy.Anarchy;
 import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.config.Config;
 import org.bukkit.World;
@@ -46,6 +47,8 @@ public class NetherCactusDupe extends Module {
                     clone.setHealth(inventory.getHealth());
                     clone.setOwner(inventory.getOwner());
                     clone.setAdult();
+
+                    Anarchy.getScheduler().runTaskLater(Anarchy.getPlugin(), clone::remove, 2L);
                 });
             }
         }
@@ -61,6 +64,4 @@ public class NetherCactusDupe extends Module {
             /* Do nothing */
         }
     }
-
-
 }

@@ -28,6 +28,7 @@ import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 
@@ -78,9 +79,7 @@ public class AntiLag extends Module {
 
                 int count = 0;
 
-                Entity[] var6 = e.getChunk().getEntities();
-
-                for (Entity ce : var6) {
+                for (Entity ce : e.getChunk().getEntities()) {
                     if (ce instanceof Firework) {
                         ++count;
                     }

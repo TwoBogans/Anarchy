@@ -36,18 +36,18 @@ public class RandomMOTD extends Module {
         Anarchy.getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.HIGHEST, PacketType.Handshake.Client.SET_PROTOCOL) {
             @Override
             public void onPacketReceiving(PacketEvent event) {
-                PacketContainer packet = event.getPacket();
-
-                final WrapperHandshakingClientSetProtocol wrappedPacket = new WrapperHandshakingClientSetProtocol(packet);
-                final String domain = wrappedPacket.getServerAddressHostnameOrIp().toLowerCase();
-
-                System.out.printf("[DEBUG] [RandomMOTD] Domain: %s", domain);
-
-                if(domain.contains("aussie")) {
-                    domainMap.put(domain, true);
-                } else {
-                    domainMap.put(domain, false);
-                }
+//                PacketContainer packet = event.getPacket();
+//
+//                final WrapperHandshakingClientSetProtocol wrappedPacket = new WrapperHandshakingClientSetProtocol(packet);
+//                final String domain = wrappedPacket.getServerAddressHostnameOrIp().toLowerCase();
+//
+//                System.out.printf("[DEBUG] [RandomMOTD] Domain: %s", domain);
+//
+//                if(domain.contains("aussie")) {
+//                    domainMap.put(domain, true);
+//                } else {
+//                    domainMap.put(domain, false);
+//                }
             }
         });
         return this;
@@ -68,8 +68,9 @@ public class RandomMOTD extends Module {
 
     public static String getFormattedMotd() {
         String[] split = wrap(getRandomMotd());
-        String motd = split.length == 1 ? Motds.PREFIX + split[0] + "\n" + Motds.PREFIX : (split.length >= 2 ? Motds.PREFIX + split[0] + "\n" + Motds.SUFFIX + split[1] : Motds.PREFIX + "\n" + Motds.SUFFIX);
-        return ChatColor.translateAlternateColorCodes('&', motd);
+        return ChatColor.translateAlternateColorCodes('&',
+                split.length == 1 ? Motds.PREFIX + split[0] + "\n" + Motds.PREFIX : (
+                split.length >= 2 ? Motds.PREFIX + split[0] + "\n" + Motds.SUFFIX + split[1] : Motds.PREFIX + "\n" + Motds.SUFFIX));
     }
 
     public static String[] wrap(String str) {

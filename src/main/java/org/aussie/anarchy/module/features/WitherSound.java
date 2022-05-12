@@ -9,6 +9,7 @@ import org.aussie.anarchy.Anarchy;
 import org.aussie.anarchy.hook.hooks.ProtocolLibHook;
 import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.config.Config;
+import org.aussie.anarchy.util.packet.wrappers.WrapperPlayServerWorldEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
@@ -29,11 +30,11 @@ public class WitherSound extends Module {
     public Module onEnable() {
         Anarchy.getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.HIGHEST, PacketType.Play.Server.WORLD_EVENT) {
             public void onPacketSending(PacketEvent event) {
-                PacketContainer packet = event.getPacket();
-                if (packet.getIntegers().read(0) == 1023) {
-                    packet.getBooleans().write(0, false);
-                }
+                WrapperPlayServerWorldEvent packet = new WrapperPlayServerWorldEvent(event.getPacket());
 
+                if (packet.getEffectId() == 1023) {
+                    packet.setDisableRelativeVolume(false);
+                }
             }
         });
         return this;

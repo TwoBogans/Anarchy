@@ -47,7 +47,7 @@ public class AntiProjectileVelocity extends Module {
                         .setZ(Util.clamp(v.getZ(), -1.5D, 1.5D)));
             }
 
-            if (entity instanceof SplashPotion || entity instanceof LingeringPotion) {
+            if (entity instanceof ThrownPotion) {
                 entity.setVelocity(v
                         .setX(Util.clamp(v.getX(), -0.5D, 0.5D))
                         .setY(Util.clamp(v.getY(), -0.5D, 0.5D))

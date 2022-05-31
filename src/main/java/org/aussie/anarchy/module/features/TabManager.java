@@ -1,16 +1,27 @@
 package org.aussie.anarchy.module.features;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.ListenerPriority;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.wrappers.PlayerInfoData;
+import com.comphenix.protocol.wrappers.WrappedChatComponent;
+import com.comphenix.protocol.wrappers.WrappedGameProfile;
+import lombok.Getter;
+import lombok.var;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.aussie.anarchy.Anarchy;
 import org.aussie.anarchy.hook.hooks.PlaceholderHook;
+import org.aussie.anarchy.hook.hooks.ProtocolLibHook;
 import org.aussie.anarchy.hook.hooks.SparkHook;
 import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.Util;
 import org.aussie.anarchy.util.compat.CompatUtil;
 import org.aussie.anarchy.util.config.Config;
 import org.aussie.anarchy.util.config.Messages;
+import org.aussie.anarchy.util.packet.wrappers.WrapperPlayServerPlayerInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -18,14 +29,13 @@ import org.bukkit.metadata.MetadataValue;
 
 import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TabManager extends Module {
 
-    public TabManager() {
-    }
+    @Getter
+    private static final HashMap<UUID, Boolean> toggled = new HashMap<>();
 
     public boolean isEnabled() {
         return Config.TABENABLED;
@@ -40,7 +50,43 @@ public class TabManager extends Module {
                 0L,
                 Config.TABUPDATEDELAY);
 
+        Anarchy.getHookManager()
+                .getHook(ProtocolLibHook.class)
+                .add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.HIGHEST, PacketType.Play.Server.PLAYER_INFO)
+        {
+            @Override
+            public void onPacketReceiving(PacketEvent event) {
+                WrapperPlayServerPlayerInfo packet = new WrapperPlayServerPlayerInfo(event.getPacket());
+
+                List<PlayerInfoData> newPlayers = new ArrayList<>();
+
+                boolean displayColour = toggled.get(event.getPlayer().getUniqueId());
+
+                packet.getData().forEach(data -> {
+                    var clone = data.getDisplayName();
+                    var plain = WrappedChatComponent.fromJson(ChatColor.stripColor(clone.getJson()));
+                    var color = WrappedChatComponent.fromLegacyText(getNameColorFromProfile(data.getProfile()));
+                    var newData = new PlayerInfoData(
+                            data.getProfile(),
+                            data.getLatency(),
+                            data.getGameMode(),
+                            (displayColour) ? color : plain
+                    );
+
+                    newPlayers.add(newData);
+                });
+
+                packet.setData(newPlayers);
+            }
+        });
+
         return this;
+    }
+
+
+    private String getNameColorFromProfile(WrappedGameProfile profile) {
+        // TODO Name Colour
+        return profile.getName();
     }
 
     public static class TabList implements Runnable {

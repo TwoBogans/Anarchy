@@ -6,6 +6,7 @@ import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.compat.CompatUtil;
 import org.aussie.anarchy.util.config.Config;
 import org.bukkit.Chunk;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockFromToEvent;
@@ -30,13 +31,22 @@ public class AntiLiquidLag extends Module {
     @EventHandler
     private void on(BlockFromToEvent e) {
         Block block = e.getBlock();
+
         SparkHook spark = Anarchy.getHookManager().getHook(SparkHook.class);
-        if (CompatUtil.get().isLiquid(block) && (!block.getChunk().isLoaded() || block.getLocation().getNearbyPlayers(Config.ANTILIQUIDLAGRADIUS).isEmpty() || spark.getTPS_10SEC() <= (double)Config.ANTILIQUIDLAGTPS || this.frozenChunks.contains(block.getChunk()))) {
-            e.setCancelled(true);
-            if (!this.frozenChunks.contains(block.getChunk()) && spark.getTPS_10SEC() <= (double)Config.ANTILIQUIDLAGTPS) {
+
+        if (CompatUtil.get().isLiquid(block) && (!block.getChunk().isLoaded()
+                || block.getLocation().getNearbyPlayers(Config.ANTILIQUIDLAGRADIUS).isEmpty()
+                || spark.getTPS_10SEC() <= (double)Config.ANTILIQUIDLAGTPS
+                || this.frozenChunks.contains(block.getChunk())
+        )) {
+           if (!this.frozenChunks.contains(block.getChunk())
+                    && (spark.getTPS_10SEC() <= (double)Config.ANTILIQUIDLAGTPS
+                    || block.getWorld().getEnvironment() == World.Environment.NETHER)
+            ) {
                 this.frozenChunks.add(block.getChunk());
             }
-        }
 
+            e.setCancelled(true);
+        }
     }
 }

@@ -5,6 +5,7 @@ import org.aussie.anarchy.hook.hooks.SparkHook;
 import org.aussie.anarchy.util.config.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
@@ -44,6 +45,15 @@ public class Util {
         } else {
             return sender instanceof Player && isAdmin((Player) sender);
         }
+    }
+
+    public static String locationToString(Location location) {
+        return String.format("%s %s %s %s",
+                location.getBlockX(),
+                location.getBlockY(),
+                location.getBlockZ(),
+                location.getWorld().getName()
+        );
     }
 
     public static int countEntities(Entity[] e, EntityType type) {

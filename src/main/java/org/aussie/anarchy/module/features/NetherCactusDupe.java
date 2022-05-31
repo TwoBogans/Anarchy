@@ -1,6 +1,5 @@
 package org.aussie.anarchy.module.features;
 
-import org.aussie.anarchy.Anarchy;
 import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.config.Config;
 import org.bukkit.World;
@@ -35,6 +34,7 @@ public class NetherCactusDupe extends Module {
             // Check Donkey is on Half a Heart
             if (inventory.getHealth() <= 1 && inventory.getEntityId() != this.cloneId) {
                 World world = inventory.getWorld();
+
                 world.spawn(inventory.getLocation(), inventory.getClass(), clone -> {
                     this.cloneId = clone.getEntityId();
                     this.copyInventory(inventory, clone);
@@ -47,13 +47,12 @@ public class NetherCactusDupe extends Module {
                     clone.setHealth(inventory.getHealth());
                     clone.setOwner(inventory.getOwner());
                     clone.setAdult();
-
-                    Anarchy.getScheduler().runTaskLater(Anarchy.getPlugin(), clone::remove, 2L);
                 });
             }
         }
     }
 
+    @SuppressWarnings({"NullableProblems", "StatementWithEmptyBody"})
     private void copyInventory(ChestedHorse from, ChestedHorse to) {
         if (from instanceof Donkey && to instanceof Donkey) {
             Donkey d1 = (Donkey) from;

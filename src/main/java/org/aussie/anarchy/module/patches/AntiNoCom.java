@@ -13,6 +13,10 @@ import org.aussie.anarchy.module.Module;
 import org.aussie.anarchy.util.compat.CompatUtil;
 import org.aussie.anarchy.util.config.Config;
 import org.aussie.anarchy.util.packet.wrappers.WrapperPlayClientBlockDig;
+import org.aussie.anarchy.util.packet.wrappers.WrapperPlayClientUseItem;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 public class AntiNoCom extends Module {
 
@@ -25,9 +29,15 @@ public class AntiNoCom extends Module {
     public Module onEnable() {
         Anarchy.getHookManager().getHook(ProtocolLibHook.class).add(new PacketAdapter(Anarchy.getPlugin(), ListenerPriority.NORMAL, PacketType.Play.Client.USE_ITEM) {
             public void onPacketReceiving(PacketEvent event) {
-                BlockPosition blockPos = event.getPacket().getBlockPositionModifier().read(0);
+                WrapperPlayClientUseItem packet = new WrapperPlayClientUseItem(event.getPacket());
 
-                if (event.getPlayer().getLocation().distance(blockPos.toLocation(event.getPlayer().getWorld())) > (double) Config.MAXNOCOMDIST) {
+                BlockPosition blockPos = packet.getLocation();
+                Location location = event.getPlayer().getLocation();
+
+                double distance = location.distance(blockPos.toLocation(location.getWorld()));
+
+                if (distance > Bukkit.getViewDistance() * 16 - 2) {
+                    packet.setLocation(new BlockPosition(location.getBlockX(), location.getBlockY(), location.getBlockZ()));
                     event.setCancelled(true);
                 }
             }
@@ -41,7 +51,7 @@ public class AntiNoCom extends Module {
 
                 double distance = event.getPlayer().getLocation().distance(blockPos.toLocation(event.getPlayer().getWorld()));
 
-                if (distance > (double) Config.MAXNOCOMDIST) {
+                if (distance > Bukkit.getViewDistance() * 16 - 2) {
                     event.setCancelled(true);
                 }
             }

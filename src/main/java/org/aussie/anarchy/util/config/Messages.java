@@ -15,6 +15,7 @@ public final class Messages {
     public static String PLAYER_NOT_FOUND;
     public static String SET_GAMEMODE;
     public static String TOG_CON_MSGS;
+    public static String TOGGLE_NAME_COLOUR;
     public static String RESTARTING_TIME;
     public static String RESTARTING_NOW;
     public static String TAB1DOMAIN;

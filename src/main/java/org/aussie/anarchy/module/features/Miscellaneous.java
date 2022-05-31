@@ -32,10 +32,12 @@ public class Miscellaneous extends Module {
     @EventHandler
     private void on(EntityDamageByEntityEvent event) {
         if (Config.CRYSTALDELAY != -1) {
-            if (event.getDamager() instanceof Player && event.getEntity() instanceof EnderCrystal && event.getEntity().getTicksLived() < Config.CRYSTALDELAY) {
+            if (event.getDamager() instanceof Player &&
+                event.getEntity() instanceof EnderCrystal &&
+                event.getEntity().getTicksLived() < Config.CRYSTALDELAY
+            ) {
                 event.setCancelled(true);
             }
-
         }
     }
 
@@ -66,10 +68,10 @@ public class Miscellaneous extends Module {
     private void on(PlayerMoveEvent e) {
         Location loc = e.getTo();
 
-        if (loc.getBlockY() >= 300) {
+        if (loc.getBlockY() >= 3000) {
             Location newLoc = loc.clone();
 
-            newLoc.setY(256);
+            newLoc.setY(300);
 
             e.setTo(newLoc);
         }

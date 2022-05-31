@@ -1,6 +1,8 @@
 ADMINS:
   - "d2efc93e-2168-30d8-8fda-af2426c1472e"
 
+ANTISPAM: true
+
 TABENABLED: true
 TABCOLORPING: false
 TABUPDATEDELAY: 60 # 1 second = 20

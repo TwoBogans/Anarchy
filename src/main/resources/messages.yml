@@ -10,6 +10,7 @@ PLAYER_NOT_ONLINE: "&6The player %player% is not online."
 PLAYER_NOT_FOUND: "&6The player %player% has not joined or doesn't exist."
 SET_GAMEMODE: "&6Set current game mode to %gamemode%"
 TOG_CON_MSGS: "&6Connection messages %toggle%"
+TOGGLE_NAME_COLOUR: "&6Player name colour %toggle%"
 RESTARTING_TIME: "&6[SERVER] Server restarting in %time%"
 RESTARTING_NOW: "&6[SERVER] Server restarting"
 HELP_MESSAGE:

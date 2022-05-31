@@ -3,6 +3,7 @@ package org.aussie.anarchy.util.config;
 import java.util.List;
 
 public final class Config {
+    public static boolean ANTISPAM;
     public static boolean CACTUSPORTALDUPE;
     public static boolean JIHADENABLED;
     public static boolean ANTINETHERROOF;

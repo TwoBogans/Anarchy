@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+}
+
+group = 'au.twobeetwotee'
+version = '1.0'
+
+targetCompatibility = sourceCompatibility = JavaVersion.VERSION_17
+
+repositories {
+    mavenLocal()
+
+    maven {
+        url = uri('https://papermc.io/repo/repository/maven-public/')
+    }
+
+    maven {
+        url = uri('https://oss.sonatype.org/content/groups/public/')
+    }
+
+    maven {
+        url = uri('https://repo.extendedclip.com/content/repositories/placeholderapi/')
+    }
+
+    maven {
+        url = uri('https://repo.dmulloy2.net/repository/public/')
+    }
+
+    maven {
+        url = uri('https://jitpack.io')
+    }
+
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2/')
+    }
+}
+
+dependencies {
+    implementation 'com.comphenix.protocol:ProtocolLib:4.7.0'
+    implementation 'fastutil:fastutil:5.0.9'
+    implementation 'org.spongepowered:configurate-yaml:4.1.2'
+    implementation 'joda-time:joda-time:2.10.13'
+
+    compileOnly 'com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT'
+    compileOnly 'me.lucko:spark-api:0.1-SNAPSHOT'
+    compileOnly 'me.clip:placeholderapi:2.11.1'
+    compileOnly 'net.luckperms:api:5.3'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+}

@@ -1,8 +1,8 @@
 name: Anarchy
 version: 1.0
-main: org.aussie.anarchy.Anarchy
+main: au.twobeetwotee.anarchy.AnarchyPatches
 api-version: 1.17
-website: https://aussieanarchy.org
+website: https://2b2t.au
 depend:
   - PistonChat
   - ProtocolLib
